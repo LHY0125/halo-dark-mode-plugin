@@ -12,10 +12,11 @@ Halo 2.25 暗色模式插件 — 为 Halo 后台管理面板提供深色/浅色�
 - ⚙️ **设置页面**：提供详细的模式选择界面（菜单 → 偏好设置 → 深色模式）
 - 🎨 **OKLCH 色彩空间**：感知均匀，暗色模式天然适配，WCAG AA 对比度保证
 - 📦 **零后端依赖**：纯前端实现，不需要后端 API
+- ✅ **覆盖已验证**：仪表盘、内容管理（文章/页面/评论）、链接、订阅、瞬间、用户、主题、设置、编辑器、模态框等页面已针对 Halo 2.25 真实 DOM 逐一验证
 
 ## 开发环境
 
-- Java 21+
+- Java 21+（Halo 插件编译要求；本机开发使用 JDK 25 + `--release 21`）
 - Node.js 18+
 - pnpm
 
@@ -55,7 +56,7 @@ pnpm test:unit     # 单元测试
 
 ## 项目结构
 
-```
+```text
 ├── build.gradle              # 根构建（BOM 2.25.0, DevTools 0.8.0）
 ├── settings.gradle           # 包含 :ui 子项目
 ├── src/
@@ -79,7 +80,14 @@ pnpm test:unit     # 单元测试
         └── styles/
             ├── index.css              # 样式入口
             ├── variables.css          # 40+ CSS 变量（浅色 + 深色）
-            └── overrides/             # 组件覆盖样式
+            └── overrides/
+                ├── halo-core.css      # ★ 核心：真实 DOM 类名覆盖
+                ├── layout.css         # 侧边栏/内容区/页脚
+                ├── components.css     # 组件类覆盖
+                ├── forms.css          # FormKit 表单
+                ├── editor.css         # 富文本编辑器
+                ├── scrollbar.css      # 滚动条
+                └── utilities.css      # 通用工具类
 ```
 
 ## 许可证
