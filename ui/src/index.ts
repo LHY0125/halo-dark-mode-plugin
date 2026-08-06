@@ -1,7 +1,11 @@
 import { definePlugin } from '@halo-dev/ui-shared'
-import { IconMoon } from '@halo-dev/components'
+import { IconPalette } from '@halo-dev/components'
 import { markRaw } from 'vue'
 import './styles/index.css'
+import { injectThemeToggle } from './injector'
+
+// 在插件加载后将切换器注入到侧边栏
+injectThemeToggle()
 
 export default definePlugin({
   components: {},
@@ -18,7 +22,7 @@ export default definePlugin({
           menu: {
             name: '深色模式',
             group: '偏好设置',
-            icon: markRaw(IconMoon),
+            icon: markRaw(IconPalette),
             priority: 50,
           },
         },

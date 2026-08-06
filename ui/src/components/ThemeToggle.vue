@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { IconMoon, IconSunny } from '@halo-dev/components'
+import IconSunLine from '~icons/ri/sun-line'
+import IconMoonLine from '~icons/ri/moon-line'
 import { useDarkMode } from '../composables/useDarkMode'
 
 const { isDark, toggle } = useDarkMode()
@@ -7,8 +8,8 @@ const { isDark, toggle } = useDarkMode()
 
 <template>
   <div class="theme-toggle" @click="toggle">
-    <IconSunny v-if="isDark" class="theme-toggle__icon" />
-    <IconMoon v-else class="theme-toggle__icon" />
+    <IconSunLine v-if="isDark" class="theme-toggle__icon" />
+    <IconMoonLine v-else class="theme-toggle__icon" />
     <span class="theme-toggle__label">
       {{ isDark ? '浅色模式' : '深色模式' }}
     </span>

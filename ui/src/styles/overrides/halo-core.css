@@ -1,0 +1,272 @@
+/* ============================================================
+   Halo Dark Mode — Halo 核心 BEM 类覆盖
+   基于 Halo 2.25 真实 DOM 扫描（demo.halocms.site）得出的选择器
+   ============================================================ */
+
+[data-halo-theme="dark"] {
+  /* ===== 页面根背景（body 溢出时兜底） ===== */
+  html,
+  body {
+    background-color: var(--halo-bg-body) !important;
+    color: var(--halo-text-primary);
+  }
+
+  /* ===== Toast 通知 ===== */
+  .toast-container .toast-body {
+    background-color: var(--halo-bg-card) !important;
+    color: var(--halo-text-primary) !important;
+    border-color: var(--halo-border-base);
+  }
+
+  /* ===== Markdown 正文（编辑器预览/瞬间预览） ===== */
+  .markdown-body {
+    background-color: transparent;
+    color: var(--halo-text-primary);
+  }
+  .markdown-body p,
+  .markdown-body li,
+  .markdown-body h1,
+  .markdown-body h2,
+  .markdown-body h3,
+  .markdown-body h4,
+  .markdown-body h5,
+  .markdown-body h6,
+  .markdown-body td,
+  .markdown-body th,
+  .markdown-body blockquote,
+  .markdown-body a {
+    color: var(--halo-text-primary);
+  }
+  .markdown-body a {
+    color: var(--halo-text-link);
+  }
+  .markdown-body code,
+  .markdown-body tt {
+    background-color: oklch(28% 0.02 250);
+    color: oklch(85% 0.05 160);
+  }
+  .markdown-body pre,
+  .markdown-body .highlight pre {
+    background-color: oklch(20% 0.015 250);
+    color: oklch(85% 0.03 160);
+  }
+  .markdown-body table tr,
+  .markdown-body table tr:nth-child(2n) {
+    background-color: var(--halo-bg-card);
+  }
+  .markdown-body table td,
+  .markdown-body table th {
+    border-color: var(--halo-border-base);
+  }
+  .markdown-body hr {
+    background-color: var(--halo-border-base);
+  }
+
+  /* ===== 页面顶栏 ===== */
+  .page-header {
+    background-color: var(--halo-bg-card);
+  }
+  .page-header__title-text {
+    color: var(--halo-text-primary);
+  }
+  .page-header__actions .btn,
+  .page-header__actions button {
+    background-color: var(--halo-bg-card);
+    color: var(--halo-text-primary);
+    border-color: var(--halo-border-base);
+  }
+  .page-header__actions .btn:hover,
+  .page-header__actions button:hover {
+    background-color: var(--halo-bg-hover);
+  }
+  .page-header__actions .btn-content {
+    color: var(--halo-text-primary);
+  }
+
+  /* ===== 卡片容器（列表页、详情页主容器） ===== */
+  .card-wrapper {
+    background-color: var(--halo-bg-card);
+    border-color: var(--halo-border-base);
+    color: var(--halo-text-primary);
+  }
+
+  /* ===== 实体字段列表（文章/页面/评论列表项） ===== */
+  .entity-field-title {
+    color: var(--halo-text-primary);
+  }
+  .entity-field-title-body {
+    color: var(--halo-text-primary);
+  }
+  .entity-field-description {
+    color: var(--halo-text-secondary);
+  }
+  .entity-field-title a,
+  .entity-field-title-body a {
+    color: var(--halo-text-primary);
+  }
+  .entity-field-title a:hover,
+  .entity-field-title-body a:hover {
+    color: var(--halo-text-link);
+  }
+
+  /* ===== 分页 ===== */
+  .pagination {
+    background-color: var(--halo-bg-card);
+    color: var(--halo-text-secondary);
+  }
+  .pagination__btn {
+    background-color: var(--halo-bg-hover);
+    color: var(--halo-text-secondary);
+  }
+  .pagination__btn:hover {
+    background-color: var(--halo-bg-active);
+    color: var(--halo-text-primary);
+  }
+  .pagination__select {
+    background-color: var(--halo-bg-input);
+    color: var(--halo-text-primary);
+    border-color: var(--halo-border-input);
+  }
+
+  /* ===== 标签/徽章（BEM） ===== */
+  .tag-wrapper,
+  .tag-default,
+  .tag-pill,
+  [class*="tag-"] {
+    background-color: var(--halo-bg-hover);
+    color: var(--halo-text-secondary);
+  }
+  .tag-content,
+  .tag-left-icon,
+  .tag-right-icon {
+    color: var(--halo-text-secondary);
+  }
+
+  /* ===== 头像 ===== */
+  .avatar-wrapper,
+  .avatar-circle {
+    background-color: var(--halo-bg-hover);
+  }
+
+  /* ===== 按钮（默认态） ===== */
+  .btn-default,
+  .btn-secondary,
+  .btn-sm,
+  .btn-md,
+  .btn-lg,
+  .btn[class*="btn"]:not(.btn-primary):not(.btn-danger) {
+    background-color: var(--halo-bg-card);
+    color: var(--halo-text-primary);
+    border-color: var(--halo-border-base);
+  }
+  .btn-default:hover,
+  .btn-secondary:hover,
+  .btn-sm:hover,
+  .btn-md:hover,
+  .btn-lg:hover {
+    background-color: var(--halo-bg-hover);
+  }
+  .btn-content {
+    color: var(--halo-text-primary);
+  }
+
+  /* ===== 表单容器（FormKit） ===== */
+  .formkit-inner {
+    background-color: var(--halo-bg-input);
+  }
+  .formkit-inner input,
+  .formkit-inner textarea,
+  .formkit-inner select {
+    background-color: transparent;
+    color: var(--halo-text-primary);
+  }
+  .formkit-inner .border,
+  .formkit-inner [class*="border-gray"] {
+    border-color: var(--halo-border-input);
+  }
+
+  /* ===== 下拉菜单 ===== */
+  .entity-dropdown {
+    background-color: var(--halo-bg-dropdown);
+    color: var(--halo-text-primary);
+    border-color: var(--halo-border-base);
+  }
+  .entity-dropdown-trigger {
+    background-color: var(--halo-bg-hover);
+    color: var(--halo-text-secondary);
+  }
+  .entity-dropdown-trigger:hover {
+    background-color: var(--halo-bg-active);
+    color: var(--halo-text-primary);
+  }
+
+  /* ===== 描述项（详情页列表，如用户详情） ===== */
+  .description-item-wrapper {
+    background-color: var(--halo-bg-card);
+    border-color: var(--halo-border-light);
+  }
+  .description-item__label {
+    color: var(--halo-text-secondary);
+  }
+  .description-item__content {
+    color: var(--halo-text-primary);
+  }
+
+  /* ===== 已选指示器 ===== */
+  .entity-selected-indicator {
+    color: var(--halo-accent-primary);
+  }
+
+  /* ===== 表格 ===== */
+  .table,
+  [class*="table-"] td,
+  [class*="table-"] th {
+    border-color: var(--halo-table-border);
+    color: var(--halo-text-primary);
+  }
+
+  /* ===== 通用文字（UnoCSS hash 类包含 Tailwind 语义） ===== */
+  .hover\:text-gray-600:hover,
+  .hover\:text-gray-700:hover,
+  .hover\:text-gray-500:hover,
+  .text-gray-600,
+  .text-gray-700,
+  .text-gray-500 {
+    color: var(--halo-text-secondary);
+  }
+  .text-gray-900,
+  .text-gray-800 {
+    color: var(--halo-text-primary);
+  }
+  .text-gray-400,
+  .text-gray-300 {
+    color: var(--halo-text-tertiary);
+  }
+
+  /* ===== 通用背景 ===== */
+  .bg-gray-50,
+  .bg-gray-100,
+  .bg-white {
+    background-color: var(--halo-bg-card);
+  }
+  .bg-gray-200 {
+    background-color: var(--halo-bg-hover);
+  }
+  .hover\:bg-gray-50:hover,
+  .hover\:bg-gray-100:hover,
+  .hover\:bg-gray-200:hover {
+    background-color: var(--halo-bg-hover);
+  }
+
+  /* ===== 边框 ===== */
+  .border,
+  .border-gray-200,
+  .border-gray-300 {
+    border-color: var(--halo-border-base);
+  }
+
+  /* ===== 通用链接 ===== */
+  a:not([class]) {
+    color: var(--halo-text-link);
+  }
+}

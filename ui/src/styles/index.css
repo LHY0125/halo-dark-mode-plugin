@@ -4,6 +4,7 @@
    ============================================================ */
 
 @import './variables.css';
+@import './overrides/halo-core.css';
 @import './overrides/utilities.css';
 @import './overrides/layout.css';
 @import './overrides/components.css';
