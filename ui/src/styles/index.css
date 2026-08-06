@@ -1,0 +1,12 @@
+/* ============================================================
+   Halo Dark Mode — 样式入口
+   按加载顺序导入所有样式文件
+   ============================================================ */
+
+@import './variables.css';
+@import './overrides/utilities.css';
+@import './overrides/layout.css';
+@import './overrides/components.css';
+@import './overrides/forms.css';
+@import './overrides/editor.css';
+@import './overrides/scrollbar.css';

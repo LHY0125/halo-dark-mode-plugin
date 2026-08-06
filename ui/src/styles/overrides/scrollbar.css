@@ -1,0 +1,48 @@
+/* ============================================================
+   Halo Dark Mode — 滚动条覆盖
+   OverlayScrollbars + 原生滚动条
+   ============================================================ */
+
+[data-halo-theme="dark"] {
+  /* ===== OverlayScrollbars ===== */
+  .os-scrollbar .os-scrollbar-handle {
+    background-color: var(--halo-scrollbar-thumb);
+  }
+
+  .os-scrollbar .os-scrollbar-track {
+    background-color: var(--halo-scrollbar-track);
+  }
+
+  .os-scrollbar .os-scrollbar-handle:hover {
+    background-color: oklch(45% 0.03 250);
+  }
+
+  /* ===== 原生滚动条（Firefox） ===== */
+  * {
+    scrollbar-color: var(--halo-scrollbar-thumb) var(--halo-scrollbar-track);
+    scrollbar-width: thin;
+  }
+
+  /* ===== 原生滚动条（Webkit：Chrome/Edge/Safari） ===== */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--halo-scrollbar-track);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--halo-scrollbar-thumb);
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: oklch(45% 0.03 250);
+  }
+
+  ::-webkit-scrollbar-corner {
+    background: var(--halo-scrollbar-track);
+  }
+}

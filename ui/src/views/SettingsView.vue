@@ -1,0 +1,125 @@
+<script setup lang="ts">
+import type { ThemeMode } from '../composables/useDarkMode'
+import { useDarkMode } from '../composables/useDarkMode'
+import { computed } from 'vue'
+
+const { theme, isDark, setTheme } = useDarkMode()
+
+const currentEffectiveMode = computed(() => {
+  if (theme.value === 'auto') {
+    return isDark.value ? '深色（跟随系统）' : '浅色（跟随系统）'
+  }
+  return theme.value === 'dark' ? '深色' : '浅色'
+})
+
+const modeOptions: { value: ThemeMode; label: string; description: string }[] = [
+  { value: 'light', label: '浅色', description: '始终使用浅色模式' },
+  { value: 'dark', label: '深色', description: '始终使用深色模式' },
+  { value: 'auto', label: '跟随系统', description: '根据系统设置自动切换' },
+]
+</script>
+
+<template>
+  <div class="dark-mode-settings">
+    <div class="dark-mode-settings__header">
+      <h1 class="dark-mode-settings__title">深色模式设置</h1>
+      <p class="dark-mode-settings__desc">选择后台管理面板的显示模式</p>
+    </div>
+
+    <div class="dark-mode-settings__card">
+      <div class="dark-mode-settings__current">
+        当前生效：<strong>{{ currentEffectiveMode }}</strong>
+      </div>
+
+      <div class="dark-mode-settings__options">
+        <div
+          v-for="option in modeOptions"
+          :key="option.value"
+          class="dark-mode-settings__option"
+          :class="{ 'is-active': theme === option.value }"
+          @click="setTheme(option.value)"
+        >
+          <div class="dark-mode-settings__option-label">{{ option.label }}</div>
+          <div class="dark-mode-settings__option-desc">{{ option.description }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<style scoped>
+.dark-mode-settings {
+  max-width: 640px;
+  padding: 1.5rem;
+}
+
+.dark-mode-settings__header {
+  margin-bottom: 1.5rem;
+}
+
+.dark-mode-settings__title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--halo-text-primary);
+  margin-bottom: 0.25rem;
+}
+
+.dark-mode-settings__desc {
+  font-size: 0.875rem;
+  color: var(--halo-text-secondary);
+}
+
+.dark-mode-settings__card {
+  padding: 1.25rem;
+  background-color: var(--halo-bg-card);
+  border: 1px solid var(--halo-border-base);
+  border-radius: 0.25rem;
+}
+
+.dark-mode-settings__current {
+  font-size: 0.875rem;
+  color: var(--halo-text-secondary);
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--halo-border-light);
+}
+
+.dark-mode-settings__current strong {
+  color: var(--halo-accent-primary);
+}
+
+.dark-mode-settings__options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.dark-mode-settings__option {
+  padding: 0.75rem 1rem;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  border: 1px solid var(--halo-border-base);
+  transition: background-color 0.15s, border-color 0.15s;
+}
+
+.dark-mode-settings__option:hover {
+  background-color: var(--halo-bg-hover);
+}
+
+.dark-mode-settings__option.is-active {
+  background-color: var(--halo-menu-item-active);
+  border-color: var(--halo-accent-primary);
+}
+
+.dark-mode-settings__option-label {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--halo-text-primary);
+  margin-bottom: 0.125rem;
+}
+
+.dark-mode-settings__option-desc {
+  font-size: 0.8125rem;
+  color: var(--halo-text-tertiary);
+}
+</style>

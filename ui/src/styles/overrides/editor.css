@@ -1,0 +1,71 @@
+/* ============================================================
+   Halo Dark Mode — 富文本编辑器覆盖
+   @halo-dev/richtext-editor + TipTap / ProseMirror
+   ============================================================ */
+
+[data-halo-theme="dark"] {
+  /* ===== ProseMirror / TipTap 编辑器主体 ===== */
+  .ProseMirror,
+  .tiptap,
+  [class*="editor-content"] {
+    color: var(--halo-text-primary);
+    background-color: var(--halo-bg-input);
+  }
+
+  /* ===== 编辑器菜单栏 ===== */
+  .editor-toolbar,
+  .editor-menubar,
+  [class*="editor-toolbar"],
+  [class*="editor-menubar"] {
+    background-color: var(--halo-bg-card);
+    border-color: var(--halo-border-base);
+  }
+
+  .editor-toolbar button,
+  .editor-menubar button {
+    color: var(--halo-text-secondary);
+  }
+
+  .editor-toolbar button:hover,
+  .editor-menubar button:hover,
+  .editor-toolbar button.is-active,
+  .editor-menubar button.is-active {
+    background-color: var(--halo-bg-hover);
+    color: var(--halo-text-primary);
+  }
+
+  /* ===== 代码块 ===== */
+  .ProseMirror pre,
+  .ProseMirror code,
+  .tiptap pre,
+  .tiptap code {
+    background-color: oklch(20% 0.015 250);
+    color: oklch(85% 0.03 160);
+  }
+
+  /* ===== Bubble menu / floating menu ===== */
+  .tippy-box,
+  .tiptap-bubble-menu,
+  .floating-menu {
+    background-color: var(--halo-bg-dropdown);
+    border-color: var(--halo-border-base);
+    color: var(--halo-text-primary);
+  }
+
+  /* ===== 编辑器占位符 ===== */
+  .ProseMirror p.is-editor-empty:first-child::before {
+    color: var(--halo-text-tertiary);
+  }
+
+  /* ===== 链接 ===== */
+  .ProseMirror a,
+  .tiptap a {
+    color: var(--halo-text-link);
+  }
+
+  /* ===== 选中文字 ===== */
+  .ProseMirror ::selection,
+  .tiptap ::selection {
+    background-color: oklch(30% 0.04 160 / 50%);
+  }
+}
