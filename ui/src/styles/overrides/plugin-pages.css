@@ -1,0 +1,133 @@
+/* ============================================================
+   Halo Dark Mode — 第三方插件页面覆盖
+   针对用户服务器上已安装插件的内部 UI 残留。
+   ⚠️ 这些插件使用 Vue scoped 样式 ([data-v-xxx])，
+   需用 !important 才能稳定覆盖。
+   ============================================================ */
+
+[data-halo-theme="dark"] {
+  /* ===== 装备管理插件 (halo-plugin-equipments) ===== */
+  .equipments .group,
+  .equipment-group .group,
+  main .group {
+    background-color: var(--halo-bg-card) !important;
+    border-color: var(--halo-border-base) !important;
+    color: var(--halo-text-primary) !important;
+  }
+  .equipment-card,
+  .equipment-card__name,
+  .equipment-card__desc,
+  [class*="equipment"] {
+    color: var(--halo-text-primary) !important;
+  }
+
+  /* ===== 日程日历插件 (plugin-calendar) ===== */
+  .week-picker {
+    background-color: var(--halo-bg-card) !important;
+    border-color: var(--halo-border-base) !important;
+  }
+  .week-picker select,
+  .week-picker input,
+  .week-picker button {
+    background-color: var(--halo-bg-input) !important;
+    color: var(--halo-text-primary) !important;
+    border-color: var(--halo-border-input) !important;
+  }
+  .day-column__body {
+    background-color: var(--halo-bg-content) !important;
+    border-color: var(--halo-border-light) !important;
+  }
+  .day-column,
+  .calendar-column,
+  [class*="day-column"] {
+    background-color: var(--halo-bg-card) !important;
+    color: var(--halo-text-primary) !important;
+  }
+  [class*="calendar"] th,
+  [class*="calendar"] td {
+    color: var(--halo-text-primary) !important;
+    border-color: var(--halo-border-base) !important;
+  }
+
+  /* ===== 心愿便签插件 (plugin-wishboard) ===== */
+  .ah-body {
+    background-color: var(--halo-bg-card) !important;
+    color: var(--halo-text-primary) !important;
+  }
+  .wb-s-card {
+    background-color: var(--halo-bg-card) !important;
+    color: var(--halo-text-primary) !important;
+    border-color: var(--halo-border-base) !important;
+  }
+  .wb-s-card-title {
+    color: var(--halo-text-primary) !important;
+  }
+  .wb-s-card-count {
+    color: var(--halo-accent-primary) !important;
+  }
+  .wb-s-list,
+  .wb-s-list-item,
+  [class*="wb-s-"] {
+    color: var(--halo-text-primary) !important;
+  }
+
+  /* ===== 瞬间插件 (plugin-moments) ===== */
+  .moment-editor,
+  .editor-main,
+  .moment-editor .card,
+  .editor-main .card {
+    background-color: var(--halo-bg-card) !important;
+    color: var(--halo-text-primary) !important;
+    border-color: var(--halo-border-base) !important;
+  }
+  .moments-content .card,
+  .moments-content .preview,
+  .moment-preview,
+  .moment-card,
+  [class*="moment-"] .card {
+    background-color: var(--halo-bg-card) !important;
+    color: var(--halo-text-primary) !important;
+  }
+  .moment-author-name,
+  .moment-content,
+  .moment-time,
+  [class*="moment"] p,
+  [class*="moment"] span,
+  [class*="moment"] div {
+    color: var(--halo-text-primary) !important;
+  }
+  .moment-editor input,
+  .moment-editor textarea,
+  .editor-main input,
+  .editor-main textarea {
+    background-color: var(--halo-bg-input) !important;
+    color: var(--halo-text-primary) !important;
+    border-color: var(--halo-border-input) !important;
+  }
+
+  /* ===== 抽奖插件 (plugin-lottery) ===== */
+  [class*="lottery"] {
+    color: var(--halo-text-primary) !important;
+  }
+
+  /* ===== 侧边栏用户资料（Halo Pro 特有） ===== */
+  .sidebar__profile .user-profile {
+    background-color: transparent !important;
+  }
+  .user-profile__name {
+    color: var(--halo-text-primary) !important;
+  }
+  .user-profile__roles .tag-default,
+  .user-profile__roles .tag-wrapper {
+    background-color: var(--halo-bg-hover) !important;
+    color: var(--halo-text-secondary) !important;
+  }
+  .user-profile__action-button {
+    color: var(--halo-text-secondary) !important;
+    background-color: transparent !important;
+  }
+  .user-profile__action-button:hover {
+    background-color: var(--halo-bg-hover) !important;
+    color: var(--halo-text-primary) !important;
+  }
+}
