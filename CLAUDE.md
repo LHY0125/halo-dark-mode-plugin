@@ -146,8 +146,16 @@ Halo 扩展点系统**没有侧边栏插槽**。`injector.ts` 用 `MutationObser
 
 第三方插件页面（链接/订阅/瞬间等）在 demo 站已装，可一并验证。
 
-## 项目文档
+## Playwright 自动化验证（workplace/）
 
-- `设计文档.md` — 完整的技术设计（架构图、CSS 变量清单、调色板、组件覆盖策略、实现阶段划分、测试策略）
-- `调查文档.md` — 技术调查（create-halo-plugin vs plugin-starter 差异、dev-skills、Halo 插件机制）
-- `README.md` — 用户向 README
+`workplace/` 目录包含基于 Playwright 的自动化验证工具（未提交到 git）：
+
+- **`login_wait.py`** — 启动带持久化配置的 Edge 窗口，打开 `https://blog.liuhangyv.top/console/login`，等待用户手动登录后将会话 cookie 保存到 `pw-profile/`。超时 280 秒。
+- **`pw-profile/`** — Edge 浏览器持久化用户数据目录，登录后会话保留供后续 Playwright 脚本复用。
+- **`roleTemplates.yaml`** — 预留的角色模板配置（当前为空）。
+
+典型流程：先运行 `login_wait.py` 登录，再编写 Playwright 脚本复用 `pw-profile` 中的会话进行页面扫描。
+
+## README.md
+
+用户向 README，包含功能介绍、快速开始、构建命令和项目结构图。

@@ -11,3 +11,7 @@ build/
 .DS_Store
 node_modules/
 dist/
+# Playwright 测试工具 — 只跟踪脚本和配置，忽略输出/截图/缓存
+workplace/*
+!workplace/*.py
+!workplace/*.yaml
