@@ -110,6 +110,122 @@
     color: var(--halo-text-primary) !important;
   }
 
+  /* ===== 存储工具箱 (plugin-storage-toolkit) ===== */
+  .toolkit-wrapper,
+  .st-scope {
+    background-color: var(--halo-bg-content) !important;
+    color: var(--halo-text-primary) !important;
+  }
+  .st-pill-tabs,
+  .stat-card.st-card,
+  .panel-card.st-card,
+  .st-card {
+    background-color: var(--halo-bg-card) !important;
+    color: var(--halo-text-primary) !important;
+    border-color: var(--halo-border-base) !important;
+  }
+  .st-card h3,
+  .st-card h4,
+  .st-card p,
+  .st-card span,
+  .st-card li,
+  [class*="st-"] .title,
+  [class*="st-"] .name {
+    color: var(--halo-text-primary) !important;
+  }
+  [class*="st-"] {
+    color: var(--halo-text-primary) !important;
+  }
+
+  /* ===== 应用市场已安装 (Halo 内置 app-store) ===== */
+  .tabbar-wrapper,
+  .tabbar-outline,
+  [class*="tabbar"] {
+    background-color: var(--halo-bg-hover) !important;
+    color: var(--halo-text-primary) !important;
+    border-color: var(--halo-border-base) !important;
+  }
+  .tabbar-item,
+  [class*="tabbar"] a,
+  [class*="tabbar"] span {
+    color: var(--halo-text-primary) !important;
+  }
+  .tabbar-item:hover,
+  [class*="tabbar"] a:hover {
+    background-color: var(--halo-bg-active) !important;
+    color: var(--halo-text-primary) !important;
+  }
+  /* 已安装应用页的筛选和卡片 */
+  .app-card,
+  .app-card-header,
+  .app-card-body,
+  [class*="app-card"] {
+    background-color: var(--halo-bg-card) !important;
+    color: var(--halo-text-primary) !important;
+    border-color: var(--halo-border-base) !important;
+  }
+  .app-card .title,
+  .app-card .name,
+  .app-card .desc,
+  [class*="app-card"] h3,
+  [class*="app-card"] p {
+    color: var(--halo-text-primary) !important;
+  }
+
+  /* ===== 文档/示例页面 (docs__box) ===== */
+  .docs__box {
+    background-color: var(--halo-bg-card) !important;
+    color: var(--halo-text-primary) !important;
+    border-color: var(--halo-border-base) !important;
+  }
+  .docs__box h3,
+  .docs__box h4,
+  .docs__box p,
+  .docs__box li,
+  .docs__box a {
+    color: var(--halo-text-primary) !important;
+  }
+  .docs__box a:hover {
+    color: var(--halo-text-link) !important;
+  }
+
+  /* ===== 通用：任何插件页面的亮色卡片兜底 ===== */
+  main .bg-gray-50,
+  main .bg-gray-100,
+  main .bg-gray-200 {
+    background-color: var(--halo-bg-hover) !important;
+  }
+  main .bg-white {
+    background-color: var(--halo-bg-card) !important;
+  }
+
+  /* ===== 应用卡片内筛选 tab（UnoCSS hash 类，用上下文定位） ===== */
+  .card-wrapper .card-header [class*="i-"],
+  .card-header [class*="i-"],
+  .card-wrapper .card-body [class*="i-"],
+  .card-body [class*="i-"],
+  [class*="app-card"] [class*="i-"] {
+    background-color: var(--halo-bg-hover) !important;
+    color: var(--halo-text-primary) !important;
+  }
+  .card-wrapper .card-header [class*="i-"]:hover,
+  .card-header [class*="i-"]:hover,
+  .card-wrapper .card-body [class*="i-"]:hover,
+  .card-body [class*="i-"]:hover {
+    background-color: var(--halo-bg-active) !important;
+    color: var(--halo-text-primary) !important;
+  }
+
+  /* ===== 存储工具箱表格表头 (col-*) ===== */
+  .col-name,
+  .col-count,
+  .col-size,
+  .col-percent,
+  [class*="col-"] {
+    background-color: var(--halo-table-header-bg) !important;
+    color: var(--halo-text-secondary) !important;
+  }
+
   /* ===== 侧边栏用户资料（Halo Pro 特有） ===== */
   .sidebar__profile .user-profile {
     background-color: transparent !important;
