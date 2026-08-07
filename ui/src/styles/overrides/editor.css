@@ -1,9 +1,172 @@
 /* ============================================================
    Halo Dark Mode — 富文本编辑器覆盖
    @halo-dev/richtext-editor + TipTap / ProseMirror
+   + Bytemd (Markdown 编辑器) + CodeMirror
    ============================================================ */
 
 [data-halo-theme="dark"] {
+  /* ===== Bytemd Markdown 编辑器 ===== */
+  .bytemd {
+    background-color: var(--halo-bg-card) !important;
+    color: var(--halo-text-primary) !important;
+    border-color: var(--halo-border-base) !important;
+  }
+  .bytemd-toolbar {
+    background-color: var(--halo-bg-content) !important;
+    color: var(--halo-text-primary) !important;
+    border-color: var(--halo-border-light) !important;
+  }
+  .bytemd-toolbar-icon {
+    color: var(--halo-text-secondary) !important;
+  }
+  .bytemd-toolbar-icon:hover {
+    background-color: var(--halo-bg-hover) !important;
+    color: var(--halo-text-primary) !important;
+  }
+  .bytemd-toolbar-tab-active,
+  .bytemd-toolbar-icon-active {
+    color: var(--halo-accent-primary) !important;
+  }
+  .bytemd-editor,
+  .bytemd-editor .CodeMirror {
+    background-color: var(--halo-bg-input) !important;
+    color: var(--halo-text-primary) !important;
+  }
+  .bytemd-preview {
+    background-color: var(--halo-bg-card) !important;
+    color: var(--halo-text-primary) !important;
+  }
+  .bytemd-status,
+  .bytemd-status-right,
+  .bytemd-status-left {
+    background-color: var(--halo-bg-content) !important;
+    color: var(--halo-text-secondary) !important;
+    border-color: var(--halo-border-light) !important;
+  }
+  .bytemd-dropdown,
+  .bytemd-dropdown-menu,
+  [class*="bytemd-dropdown"] {
+    background-color: var(--halo-bg-dropdown) !important;
+    color: var(--halo-text-primary) !important;
+    border-color: var(--halo-border-base) !important;
+  }
+  .bytemd-dropdown-title {
+    color: var(--halo-text-secondary) !important;
+  }
+  .bytemd-dropdown-item {
+    color: var(--halo-text-primary) !important;
+  }
+  .bytemd-dropdown-item:hover {
+    background-color: var(--halo-bg-hover) !important;
+  }
+  .bytemd-sidebar,
+  .bytemd-toc,
+  .bytemd-toc ul,
+  .bytemd-toc li {
+    background-color: var(--halo-bg-content) !important;
+    color: var(--halo-text-secondary) !important;
+  }
+  .bytemd-toc-active {
+    background-color: var(--halo-bg-hover) !important;
+    color: var(--halo-accent-primary) !important;
+  }
+  .bytemd-floating-btn {
+    background-color: var(--halo-bg-card) !important;
+    color: var(--halo-text-secondary) !important;
+    border-color: var(--halo-border-base) !important;
+  }
+  .bytemd-floating-btn:hover {
+    background-color: var(--halo-bg-hover) !important;
+  }
+  .bytemd-floating-btn.active {
+    background-color: var(--halo-bg-active) !important;
+    color: var(--halo-accent-primary) !important;
+  }
+  .bytemd-code-theme-toggle,
+  .bytemd-copy-code-btn,
+  [class*="bytemd"] button {
+    color: var(--halo-text-secondary) !important;
+  }
+  .bytemd-copy-code-btn:hover,
+  [class*="bytemd"] button:hover {
+    color: var(--halo-text-primary) !important;
+    background-color: var(--halo-bg-hover) !important;
+  }
+  /* 编辑器内 markdown 正文 */
+  .bytemd-preview .markdown-body,
+  .bytemd-editor .markdown-body {
+    color: var(--halo-text-primary) !important;
+  }
+  .bytemd-preview .markdown-body p,
+  .bytemd-preview .markdown-body li,
+  .bytemd-preview .markdown-body h1,
+  .bytemd-preview .markdown-body h2,
+  .bytemd-preview .markdown-body h3,
+  .bytemd-preview .markdown-body h4,
+  .bytemd-preview .markdown-body td,
+  .bytemd-preview .markdown-body th,
+  .bytemd-preview .markdown-body blockquote {
+    color: var(--halo-text-primary) !important;
+  }
+  .bytemd-preview .markdown-body code,
+  .bytemd-preview .markdown-body pre,
+  .bytemd-preview .markdown-body pre code {
+    background-color: oklch(22% 0.02 250) !important;
+    color: oklch(85% 0.05 160) !important;
+  }
+  .bytemd-preview .markdown-body table tr,
+  .bytemd-preview .markdown-body table tr:nth-child(2n) {
+    background-color: var(--halo-bg-card) !important;
+  }
+  .bytemd-preview .markdown-body table td,
+  .bytemd-preview .markdown-body table th {
+    border-color: var(--halo-border-base) !important;
+  }
+
+  /* ===== CodeMirror 代码编辑器 ===== */
+  .CodeMirror {
+    background-color: var(--halo-bg-input) !important;
+    color: var(--halo-text-primary) !important;
+  }
+  .CodeMirror-gutters {
+    background-color: var(--halo-bg-content) !important;
+    border-color: var(--halo-border-light) !important;
+  }
+  .CodeMirror-linenumber {
+    color: var(--halo-text-tertiary) !important;
+  }
+  .CodeMirror-cursor {
+    border-color: var(--halo-text-primary) !important;
+  }
+  .CodeMirror-selected {
+    background-color: oklch(30% 0.04 160 / 50%) !important;
+  }
+  .cm-s-default .cm-header,
+  .cm-s-default .cm-strong,
+  .cm-s-default .cm-em,
+  .cm-s-default .cm-link,
+  .cm-s-default .cm-url {
+    color: var(--halo-text-primary) !important;
+  }
+  .cm-s-default .cm-comment {
+    color: var(--halo-text-tertiary) !important;
+  }
+  .cm-s-default .cm-quote {
+    color: var(--halo-accent-success) !important;
+  }
+  .cm-s-default .cm-tag {
+    color: var(--halo-accent-primary) !important;
+  }
+  .CodeMirror pre.CodeMirror-placeholder {
+    color: var(--halo-text-tertiary) !important;
+  }
+  .CodeMirror-activeline-background {
+    background-color: var(--halo-bg-hover) !important;
+  }
+  .CodeMirror-lines {
+    color: var(--halo-text-primary) !important;
+  }
+
   /* ===== ProseMirror / TipTap 编辑器主体 ===== */
   .ProseMirror,
   .tiptap,
