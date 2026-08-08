@@ -8,19 +8,19 @@
 - **偏好持久化**：自动记忆用户选择（localStorage），刷新不丢失
 - **系统偏好跟随**：切换系统外观时自动响应
 - **Dark Reader 引擎**：自动分析页面 CSS 与 DOM，覆盖 Halo 核心页面和第三方插件页面
-- **侧边栏一键切换**：切换按钮自动出现在侧边栏 UserProfileBanner 上方
-- **设置页面**：在「偏好设置 → 深色模式」中详细选择显示模式
+- **官方外观分组**：设置入口位于 Halo「外观」分组，与主题、菜单、插件同组
+- **设置页面**：在「外观 → 深色模式」中详细选择显示模式
 - **零后端依赖**：纯前端实现，不需要额外后端 API
 
 ## 安装
 
 1. 从 Releases 下载 `plugin-dark-mode-<version>.jar`。
 2. 在 Halo 后台的「插件管理」中上传并安装。
-3. 启用插件后，侧边栏底部会出现深色模式切换按钮。
+3. 启用插件后，进入「外观 → 深色模式」设置页面调整主题。
 
 ## 使用
 
-安装并启用后，可以直接点击侧边栏按钮在深色和浅色模式之间切换，也可以进入设置页面选择固定模式：
+安装并启用后，进入「外观 → 深色模式」设置页面选择显示模式：
 
 | 配置项   | 可选值    | 说明                 |
 | -------- | --------- | -------------------- |
@@ -33,7 +33,7 @@
 - 插件通过 `useDarkMode()` 管理 `light` / `dark` / `auto` 三种状态。
 - 深色模式下调用 Dark Reader 的 `enable()`，浅色模式下调用 `disable()`。
 - Dark Reader 会持续监听页面 DOM 变化，因此第三方插件动态渲染的内容也能自动转换。
-- 插件自身只保留切换器与设置页所需的最小 UI 变量，不再维护逐页手工 CSS 覆盖。
+- 插件自身只保留设置页所需的最小 UI 变量，不再维护逐页手工 CSS 覆盖。
 
 > 说明：Dark Reader 的样式注入是异步的，刷新瞬间仍可能存在极短闪白；插件通过同步设置 `color-scheme` 缓解，但无法完全消除。
 
@@ -108,12 +108,9 @@ pnpm build        # 生产构建
     └── src/
         ├── index.ts                   # definePlugin 入口
         ├── darkreader-engine.ts       # Dark Reader 通用暗色引擎
-        ├── injector.ts                # 侧边栏切换器注入
         ├── composables/
         │   ├── useDarkMode.ts         # 主题状态管理（模块级单例）
         │   └── useSystemPreference.ts # 系统偏好监听
-        ├── components/
-        │   └── ThemeToggle.vue        # 侧边栏切换按钮
         ├── views/
         │   └── SettingsView.vue       # 设置页面
         └── styles/
@@ -127,9 +124,15 @@ pnpm build        # 生产构建
 ./gradlew test
 ```
 
-运行时验证脚本位于 `scripts/verify-toggle.py`，用于检查主题切换、localStorage 持久化以及 Dark Reader 注入状态。
+运行时验证脚本位于 `scripts/verify-toggle.py`，用于直接驱动主题状态，并检查 data-halo-theme、localStorage、Dark Reader 注入与 color-scheme 的翻转。
 
 ## 更新日志
+
+### v1.0.6
+
+- 深色模式设置入口移至 Halo 官方「外观」分组
+- 移除侧边栏底部注入的切换按钮，设置页成为唯一入口
+- 更新运行时验证脚本：直接驱动主题状态，不再依赖侧边栏按钮
 
 ### v1.0.5
 

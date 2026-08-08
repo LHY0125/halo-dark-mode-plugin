@@ -42,13 +42,15 @@ D:\settings\settings\uv\my_uv_env\Scripts\python.exe scripts\scan-dark.py --mode
 D:\settings\settings\uv\my_uv_env\Scripts\python.exe scripts\verify-toggle.py
 ```
 
-部署新版插件后运行，会检查：
+部署新版插件后运行，会直接驱动 localStorage 中的主题状态，并检查：
 
 - `data-halo-theme` 属性翻转
 - localStorage 持久化翻转
 - `data-darkreader-mode`（Dark Reader 注入状态）翻转
+- `color-scheme` 翻转
+- 侧边栏已不再注入 `.theme-toggle` / `.plugin-dark-mode-toggle` 按钮
 
-三项全部 PASS 时返回 0。
+状态翻转全部 PASS 且按钮已移除时返回 0。
 
 ## 输出
 

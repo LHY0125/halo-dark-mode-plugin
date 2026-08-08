@@ -20,7 +20,10 @@ const modeOptions: { value: ThemeMode; label: string; description: string }[] = 
 
 const optionEls = ref<HTMLButtonElement[]>([])
 const activeIndex = computed(() =>
-  Math.max(0, modeOptions.findIndex((option) => option.value === theme.value)),
+  Math.max(
+    0,
+    modeOptions.findIndex((option) => option.value === theme.value),
+  ),
 )
 
 function setOptionRef(el: unknown, index: number): void {
@@ -79,7 +82,11 @@ function onKeydown(event: KeyboardEvent): void {
           :class="{ 'is-active': theme === option.value }"
           :aria-checked="theme === option.value"
           :tabindex="theme === option.value ? 0 : -1"
-          :ref="(el: unknown) => { setOptionRef(el, index) }"
+          :ref="
+            (el: unknown) => {
+              setOptionRef(el, index)
+            }
+          "
           @click="setTheme(option.value)"
         >
           <div class="dark-mode-settings__option-label">{{ option.label }}</div>

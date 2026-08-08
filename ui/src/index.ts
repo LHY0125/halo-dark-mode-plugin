@@ -3,10 +3,7 @@ import { IconPalette } from '@halo-dev/components'
 import { markRaw } from 'vue'
 import './styles/index.css'
 import { initDarkReaderEngine } from './darkreader-engine'
-import { injectThemeToggle } from './injector'
 
-// 在插件加载后将切换器注入到侧边栏，暗色转换完全交给 Dark Reader
-injectThemeToggle()
 initDarkReaderEngine()
 
 export default definePlugin({
@@ -23,7 +20,8 @@ export default definePlugin({
           searchable: true,
           menu: {
             name: '深色模式',
-            group: '偏好设置',
+            // Halo 官方「外观」分组
+            group: 'interface',
             icon: markRaw(IconPalette),
             priority: 50,
           },
