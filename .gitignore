@@ -32,5 +32,6 @@ third-party/darkreader/*
 !third-party/darkreader/darkreader.mjs
 !third-party/darkreader/index.d.ts
 !third-party/darkreader/LICENSE
+!third-party/darkreader/SHA256SUMS
 __pycache__/
 *.pyc

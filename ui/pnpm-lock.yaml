@@ -562,17 +562,6 @@ packages:
   '@rolldown/pluginutils@1.0.1':
     resolution: {integrity: sha512-2j9bGt5Jh8hj+vPtgzPtl72j0yRxHAyumoo6TNfAjsLB04UtpSvPbPcDcBMxz7n+9CYB0c1GxQFxYRg2jimqGw==}
 
-  '@rollup/rollup-linux-x64-gnu@4.62.4':
-    resolution: {integrity: sha512-W69hukhZ3KKNRCaMIEzKvcFye42hh0FE1+YoYaf5+Ikacuftoco6yO/xouz0hc5d5W/s3yBro5jRiuEE/Q5vUw==}
-    cpu: [x64]
-    os: [linux]
-    libc: [glibc]
-
-  '@rollup/rollup-win32-x64-msvc@4.62.4':
-    resolution: {integrity: sha512-zD6NdeWEByGE9QF9vCrlJ5YQB4oq9q91kPZS37Jwj5hOkvR1lTBSpsKhKDw4IJtbQ35LsTS1HD9DZYGKIshU1Q==}
-    cpu: [x64]
-    os: [win32]
-
   '@rsbuild/core@2.1.10':
     resolution: {integrity: sha512-lwxC5w88U2AMv6aNwG3VH7+AV33N4JJQjD//egVWFsMbV+OE/bnfCsurSpX8s3lGyRYkJMwUVN+YXMbmmYZFfw==}
     engines: {node: ^20.19.0 || >=22.12.0}
@@ -1626,9 +1615,6 @@ packages:
 
   magic-string@0.30.21:
     resolution: {integrity: sha512-vd2F4YUyEXKGcLHoq+TEyCjxueSeHnFxyyjNp80yg0XV4vUhnDer/lvvlqM/arB5bXQN5K2/3oinyCRyx8T2CQ==}
-
-  malevic@0.20.2:
-    resolution: {integrity: sha512-s44yEUyfDaONt7nPT7NDQ+Z2oAswErG70ok2Q95bJFh1Bdcn4dZQVMrLE02ZIjTtYfQ/LFOVxF+yB3bdGw/GtQ==}
 
   math-intrinsics@1.1.0:
     resolution: {integrity: sha512-/IXtbwEk5HTPyEwyKX6hGkYXxM9nbj64B+ilVJnC/R6B0pH5G4V3b0pVbL7DBj4tkhBAppbQUlf6F6Xl9LHu1g==}
@@ -2755,12 +2741,6 @@ snapshots:
 
   '@rolldown/pluginutils@1.0.1': {}
 
-  '@rollup/rollup-linux-x64-gnu@4.62.4':
-    optional: true
-
-  '@rollup/rollup-win32-x64-msvc@4.62.4':
-    optional: true
-
   '@rsbuild/core@2.1.10':
     dependencies:
       '@rspack/core': 2.1.8(@swc/helpers@0.5.23)
@@ -3340,12 +3320,7 @@ snapshots:
 
   csstype@3.2.3: {}
 
-  darkreader@file:../third-party/darkreader:
-    dependencies:
-      malevic: 0.20.2
-    optionalDependencies:
-      '@rollup/rollup-linux-x64-gnu': 4.62.4
-      '@rollup/rollup-win32-x64-msvc': 4.62.4
+  darkreader@file:../third-party/darkreader: {}
 
   data-urls@5.0.0:
     dependencies:
@@ -3854,8 +3829,6 @@ snapshots:
   magic-string@0.30.21:
     dependencies:
       '@jridgewell/sourcemap-codec': 1.5.5
-
-  malevic@0.20.2: {}
 
   math-intrinsics@1.1.0: {}
 

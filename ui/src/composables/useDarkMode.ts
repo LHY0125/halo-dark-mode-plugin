@@ -26,13 +26,19 @@ function persistTheme(theme: ThemeMode): void {
   }
 }
 
-/** 将 data-halo-theme 属性应用到 <html> 元素 */
+/**
+ * 将主题状态同步到 <html>。
+ * data-halo-theme 为兼容性遗留标记，当前已无 CSS 消费方，保留给外部脚本与验证工具；
+ * color-scheme 用于在 Dark Reader 异步注入前同步浏览器控件外观，缓解 FOUC。
+ */
 function applyHtmlAttribute(isDark: boolean): void {
+  const root = document.documentElement
   if (isDark) {
-    document.documentElement.setAttribute('data-halo-theme', 'dark')
+    root.setAttribute('data-halo-theme', 'dark')
   } else {
-    document.documentElement.removeAttribute('data-halo-theme')
+    root.removeAttribute('data-halo-theme')
   }
+  root.style.colorScheme = isDark ? 'dark' : 'light'
 }
 
 // 模块级单例 — 所有组件共享同一个状态
@@ -51,6 +57,15 @@ watch(isDark, (dark) => applyHtmlAttribute(dark), { immediate: true })
 
 // 监听 theme 变化 → 持久化
 watch(theme, (t) => persistTheme(t))
+
+// 多标签页同步：其他标签页修改主题时跟随更新
+window.addEventListener('storage', (event) => {
+  if (event.key !== STORAGE_KEY) return
+  const value = event.newValue
+  if (value === 'light' || value === 'dark' || value === 'auto') {
+    theme.value = value
+  }
+})
 
 // 监听系统偏好变化 → 仅在 'auto' 模式下响应
 onChange((systemDark) => {

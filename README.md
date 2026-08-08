@@ -22,11 +22,11 @@
 
 安装并启用后，可以直接点击侧边栏按钮在深色和浅色模式之间切换，也可以进入设置页面选择固定模式：
 
-| 配置项 | 可选值 | 说明 |
-| --- | --- | --- |
-| 主题模式 | `light` | 始终使用浅色模式 |
-| 主题模式 | `dark` | 始终使用深色模式 |
-| 主题模式 | `auto` | 跟随系统外观自动切换 |
+| 配置项   | 可选值    | 说明                 |
+| -------- | --------- | -------------------- |
+| 主题模式 | `light` | 始终使用浅色模式     |
+| 主题模式 | `dark`  | 始终使用深色模式     |
+| 主题模式 | `auto`  | 跟随系统外观自动切换 |
 
 ## 技术原理
 
@@ -35,10 +35,14 @@
 - Dark Reader 会持续监听页面 DOM 变化，因此第三方插件动态渲染的内容也能自动转换。
 - 插件自身只保留切换器与设置页所需的最小 UI 变量，不再维护逐页手工 CSS 覆盖。
 
+> 说明：Dark Reader 的样式注入是异步的，刷新瞬间仍可能存在极短闪白；插件通过同步设置 `color-scheme` 缓解，但无法完全消除。
+
 ## 第三方依赖
 
 - [Dark Reader](https://github.com/darkreader/darkreader) `4.9.129`，[MIT License](https://github.com/darkreader/darkreader/blob/main/LICENSE)。
 - 构建所需文件位于 `third-party/darkreader/`，由 `ui/package.json` 通过本地文件依赖引用。
+- 升级或替换 Dark Reader 构建文件后，请校验 `third-party/darkreader/SHA256SUMS`：
+  Linux / macOS 使用 `sha256sum -c SHA256SUMS`，Windows 使用 `Get-FileHash -Algorithm SHA256` 对比。
 
 ## 开发环境
 
@@ -126,6 +130,15 @@ pnpm build        # 生产构建
 运行时验证脚本位于 `scripts/verify-toggle.py`，用于检查主题切换、localStorage 持久化以及 Dark Reader 注入状态。
 
 ## 更新日志
+
+### v1.0.5
+
+- 同步设置 `color-scheme`，缓解深色模式刷新闪烁
+- 增加多标签页主题同步与 `useDarkMode` 单元测试
+- 侧边栏切换按钮与设置选项支持键盘操作
+- 后端日志改用 Lombok `@Slf4j`
+- 裁剪 vendored `package.json`，新增 Dark Reader `SHA256SUMS` 完整性校验
+- `plugin.yaml` 改为安装后由用户手动启用
 
 ### v1.0.4
 

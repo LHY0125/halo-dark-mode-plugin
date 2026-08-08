@@ -6,6 +6,7 @@ import { useDarkMode } from './composables/useDarkMode'
  * Dark Reader 引擎参数。
  * 纯 Dark Reader 策略下不再维护手工 CSS 覆盖；
  * 这里只调整通用观感参数，让核心与第三方插件页面转换后风格统一。
+ * 注意：DR 注入为异步过程，刷新闪烁只能由 useDarkMode 的 color-scheme 同步缓解。
  */
 const DARK_READER_THEME = {
   brightness: 100,

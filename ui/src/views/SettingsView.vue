@@ -31,17 +31,24 @@ const modeOptions: { value: ThemeMode; label: string; description: string }[] = 
         当前生效：<strong>{{ currentEffectiveMode }}</strong>
       </div>
 
-      <div class="dark-mode-settings__options">
-        <div
+      <div
+        class="dark-mode-settings__options"
+        role="radiogroup"
+        aria-label="主题模式"
+      >
+        <button
           v-for="option in modeOptions"
           :key="option.value"
+          type="button"
+          role="radio"
           class="dark-mode-settings__option"
           :class="{ 'is-active': theme === option.value }"
+          :aria-checked="theme === option.value"
           @click="setTheme(option.value)"
         >
           <div class="dark-mode-settings__option-label">{{ option.label }}</div>
           <div class="dark-mode-settings__option-desc">{{ option.description }}</div>
-        </div>
+        </button>
       </div>
     </div>
   </div>
@@ -95,15 +102,25 @@ const modeOptions: { value: ThemeMode; label: string; description: string }[] = 
 }
 
 .dark-mode-settings__option {
+  width: 100%;
   padding: 0.75rem 1rem;
+  border: 1px solid var(--halo-border-base);
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
   border-radius: 0.375rem;
   cursor: pointer;
-  border: 1px solid var(--halo-border-base);
   transition: background-color 0.15s, border-color 0.15s;
 }
 
 .dark-mode-settings__option:hover {
   background-color: var(--halo-bg-hover);
+}
+
+.dark-mode-settings__option:focus-visible {
+  outline: 2px solid var(--halo-accent-primary);
+  outline-offset: 2px;
 }
 
 .dark-mode-settings__option.is-active {
