@@ -11,7 +11,7 @@ import run.halo.app.plugin.PluginContext;
  * <p>Only one main class extending {@link BasePlugin} is allowed per plugin.</p>
  *
  * @author LHY
- * @since 1.0.7
+ * @since 1.0.8
  */
 @Slf4j
 @Component

@@ -128,6 +128,11 @@ pnpm build        # 生产构建
 
 ## 更新日志
 
+### v1.0.8
+
+- 设置页改用 Halo 官方 VPageHeader / VCard / VDescription / VTag 组件，与官方页面风格统一
+- 精简插件自身 CSS 变量，仅保留设置页所需变量
+
 ### v1.0.7
 
 - 移除设置页方向键切换、roving tabindex 与 ARIA 单选组语义，保留原生按钮点击切换

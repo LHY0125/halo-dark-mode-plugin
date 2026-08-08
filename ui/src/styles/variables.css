@@ -6,56 +6,14 @@
 /* 说明：data-halo-theme 为兼容性遗留标记，当前已无 CSS 消费方，保留给外部脚本与验证工具。 */
 /* ===== 浅色模式（Halo 默认，此处定义为显式回退） ===== */
 :root {
-  --halo-bg-body: oklch(97% 0.005 250);
-  --halo-bg-sidebar: oklch(100% 0 0);
-  --halo-bg-content: oklch(97% 0.005 250);
-  --halo-bg-card: oklch(100% 0 0);
-  --halo-bg-input: oklch(100% 0 0);
-  --halo-bg-hover: oklch(95% 0.01 250);
-  --halo-bg-active: oklch(90% 0.02 160);
-  --halo-bg-disabled: oklch(95% 0.005 250);
-  --halo-bg-tooltip: oklch(20% 0.01 250);
-  --halo-bg-modal: oklch(0% 0 0 / 60%);
-  --halo-bg-dropdown: oklch(100% 0 0);
-
   --halo-text-primary: oklch(20% 0.01 250);
-  --halo-text-secondary: oklch(45% 0.01 250);
   --halo-text-tertiary: oklch(60% 0.01 250);
-  --halo-text-link: oklch(45% 0.15 160);
-  --halo-text-inverse: oklch(100% 0 0);
+
+  --halo-bg-hover: oklch(95% 0.01 250);
 
   --halo-border-base: oklch(88% 0.01 250);
-  --halo-border-light: oklch(93% 0.005 250);
-  --halo-border-input: oklch(80% 0.01 250);
-  --halo-border-focus: oklch(55% 0.15 160);
 
   --halo-accent-primary: oklch(55% 0.14 160);
-  --halo-accent-primary-hover: oklch(48% 0.15 160);
-  --halo-accent-primary-text: oklch(100% 0 0);
-  --halo-accent-danger: oklch(45% 0.18 25);
-  --halo-accent-danger-hover: oklch(40% 0.19 25);
-  --halo-accent-success: oklch(50% 0.16 150);
-  --halo-accent-warning: oklch(60% 0.16 85);
 
-  --halo-shadow-sm: 0 1px 2px oklch(0% 0 0 / 6%);
-  --halo-shadow-base: 0 2px 8px oklch(0% 0 0 / 10%);
-  --halo-shadow-lg: 0 4px 16px oklch(0% 0 0 / 14%);
-
-  --halo-scrollbar-thumb: oklch(80% 0.01 250);
-  --halo-scrollbar-track: oklch(95% 0.005 250);
-
-  --halo-search-bg: oklch(95% 0.01 250);
-  --halo-search-text: oklch(45% 0.01 250);
-  --halo-search-placeholder: oklch(60% 0.01 250);
-
-  --halo-menu-item-hover: oklch(93% 0.02 160);
   --halo-menu-item-active: oklch(88% 0.03 160);
-  --halo-menu-group-title: oklch(55% 0.01 250);
-
-  --halo-table-header-bg: oklch(96% 0.005 250);
-  --halo-table-row-hover: oklch(93% 0.015 250);
-  --halo-table-border: oklch(88% 0.01 250);
-
-  --halo-tag-bg: oklch(90% 0.04 160);
-  --halo-tag-text: oklch(40% 0.1 160);
 }

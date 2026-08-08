@@ -1,6 +1,14 @@
 <script setup lang="ts">
 import type { ThemeMode } from '../composables/useDarkMode'
 import { useDarkMode } from '../composables/useDarkMode'
+import {
+  IconPalette,
+  VCard,
+  VDescription,
+  VDescriptionItem,
+  VPageHeader,
+  VTag,
+} from '@halo-dev/components'
 import { computed } from 'vue'
 
 const { theme, isDark, setTheme } = useDarkMode()
@@ -20,79 +28,47 @@ const modeOptions: { value: ThemeMode; label: string; description: string }[] = 
 </script>
 
 <template>
-  <div class="dark-mode-settings">
-    <div class="dark-mode-settings__header">
-      <h1 class="dark-mode-settings__title">深色模式设置</h1>
-      <p class="dark-mode-settings__desc">选择后台管理面板的显示模式</p>
-    </div>
+  <div>
+    <VPageHeader title="深色模式设置">
+      <template #icon>
+        <IconPalette />
+      </template>
+    </VPageHeader>
 
-    <div class="dark-mode-settings__card">
-      <div class="dark-mode-settings__current">
-        当前生效：<strong>{{ currentEffectiveMode }}</strong>
-      </div>
+    <div class="m-0 md:m-4">
+      <VCard :body-class="['!p-0']">
+        <div class="p-4">
+          <VDescription>
+            <VDescriptionItem label="当前生效">
+              <VTag>{{ currentEffectiveMode }}</VTag>
+            </VDescriptionItem>
+          </VDescription>
 
-      <div class="dark-mode-settings__options">
-        <button
-          v-for="option in modeOptions"
-          :key="option.value"
-          type="button"
-          class="dark-mode-settings__option"
-          :class="{ 'is-active': theme === option.value }"
-          @click="setTheme(option.value)"
-        >
-          <div class="dark-mode-settings__option-label">{{ option.label }}</div>
-          <div class="dark-mode-settings__option-desc">{{ option.description }}</div>
-        </button>
-      </div>
+          <div class="dark-mode-settings__options">
+            <button
+              v-for="option in modeOptions"
+              :key="option.value"
+              type="button"
+              class="dark-mode-settings__option"
+              :class="{ 'is-active': theme === option.value }"
+              @click="setTheme(option.value)"
+            >
+              <div class="dark-mode-settings__option-label">{{ option.label }}</div>
+              <div class="dark-mode-settings__option-desc">{{ option.description }}</div>
+            </button>
+          </div>
+        </div>
+      </VCard>
     </div>
   </div>
 </template>
 
 <style scoped>
-.dark-mode-settings {
-  max-width: 640px;
-  padding: 1.5rem;
-}
-
-.dark-mode-settings__header {
-  margin-bottom: 1.5rem;
-}
-
-.dark-mode-settings__title {
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: var(--halo-text-primary);
-  margin-bottom: 0.25rem;
-}
-
-.dark-mode-settings__desc {
-  font-size: 0.875rem;
-  color: var(--halo-text-secondary);
-}
-
-.dark-mode-settings__card {
-  padding: 1.25rem;
-  background-color: var(--halo-bg-card);
-  border: 1px solid var(--halo-border-base);
-  border-radius: 0.25rem;
-}
-
-.dark-mode-settings__current {
-  font-size: 0.875rem;
-  color: var(--halo-text-secondary);
-  margin-bottom: 1rem;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid var(--halo-border-light);
-}
-
-.dark-mode-settings__current strong {
-  color: var(--halo-accent-primary);
-}
-
 .dark-mode-settings__options {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  margin-top: 1rem;
 }
 
 .dark-mode-settings__option {
