@@ -35,3 +35,7 @@ third-party/darkreader/*
 !third-party/darkreader/SHA256SUMS
 __pycache__/
 *.pyc
+
+# 内部审查/计划文档不入库，仅保留本地
+docs/*.md
+docs/**/*.md

@@ -28,6 +28,18 @@
 | 主题模式 | `dark`  | 始终使用深色模式     |
 | 主题模式 | `auto`  | 跟随系统外观自动切换 |
 
+## 截图预览
+
+以下截图展示插件在 Halo 后台的实际效果。
+
+![插件设置界面](docs/screenshots/插件界面.png)
+
+![后台深色模式效果 1](docs/screenshots/photo1.png)
+
+![后台深色模式效果 2](docs/screenshots/photo2.png)
+
+![后台深色模式效果 3](docs/screenshots/photo3.png)
+
 ## 技术原理
 
 - 插件通过 `useDarkMode()` 管理 `light` / `dark` / `auto` 三种状态。
