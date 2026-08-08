@@ -10,7 +10,7 @@ import run.halo.app.plugin.PluginContext;
  * <p>Only one main class extending {@link BasePlugin} is allowed per plugin.</p>
  *
  * @author LHY
- * @since 1.0.3
+ * @since 1.0.4
  */
 @Component
 public class DarkModePlugin extends BasePlugin {

@@ -1,15 +1,6 @@
 /* ============================================================
    Halo Dark Mode — 样式入口
-   按加载顺序导入所有样式文件
+   仅保留插件自身 UI 变量；页面暗色转换完全交给 Dark Reader。
    ============================================================ */
 
 @import './variables.css';
-@import './overrides/halo-core.css';
-@import './overrides/plugin-pages.css';
-@import './overrides/uno-fallback.css';
-@import './overrides/utilities.css';
-@import './overrides/layout.css';
-@import './overrides/components.css';
-@import './overrides/forms.css';
-@import './overrides/editor.css';
-@import './overrides/scrollbar.css';

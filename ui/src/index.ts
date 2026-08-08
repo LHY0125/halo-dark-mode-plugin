@@ -4,11 +4,9 @@ import { markRaw } from 'vue'
 import './styles/index.css'
 import { initDarkReaderEngine } from './darkreader-engine'
 import { injectThemeToggle } from './injector'
-import { initMonacoThemeSync } from './monaco-theme'
 
-// 在插件加载后将切换器注入到侧边栏，并让 Monaco 跟随主题
+// 在插件加载后将切换器注入到侧边栏，暗色转换完全交给 Dark Reader
 injectThemeToggle()
-initMonacoThemeSync()
 initDarkReaderEngine()
 
 export default definePlugin({

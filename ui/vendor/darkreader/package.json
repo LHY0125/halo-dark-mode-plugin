@@ -1,9 +1,0 @@
-{
-  "name": "darkreader",
-  "version": "4.9.129",
-  "description": "Dark mode for every website",
-  "main": "darkreader.js",
-  "module": "darkreader.mjs",
-  "types": "index.d.ts",
-  "license": "MIT"
-}

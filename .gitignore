@@ -21,5 +21,6 @@ workplace/*
 scripts/output/
 scripts/.browser-profile/
 
-# Dark Reader 源码下载目录（构建依赖已 vendor 到 ui/vendor/darkreader）
-docs/darkreader/
+# 本地项目说明文件，不入库
+AGENTS.md
+CLAUDE.md
