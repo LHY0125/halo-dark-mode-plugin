@@ -15,7 +15,7 @@ Halo 2.25 暗色模式插件 — 为 Halo 后台管理面板提供深色/浅色�
 ## 第三方依赖
 
 - [Dark Reader](https://github.com/darkreader/darkreader) `4.9.129`，使用 [MIT License](https://github.com/darkreader/darkreader/blob/main/LICENSE)。
-  作为插件的暗色转换引擎，源码已整理到 `third-party/darkreader/`，构建时由 `ui/package.json` 通过本地文件依赖引用。
+  作为插件的暗色转换引擎，构建所需文件已整理到 `third-party/darkreader/`，构建时由 `ui/package.json` 通过本地文件依赖引用。
 
 ## 开发环境
 

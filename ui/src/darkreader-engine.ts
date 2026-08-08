@@ -4,8 +4,8 @@ import { useDarkMode } from './composables/useDarkMode'
 
 /**
  * Dark Reader 引擎参数。
- * brightness/contrast 保持默认观感，背景色与现有 Halo 暗色变量接近，
- * 让 Dark Reader 补全第三方插件页面时不会显得突兀。
+ * 纯 Dark Reader 策略下不再维护手工 CSS 覆盖；
+ * 这里只调整通用观感参数，让核心与第三方插件页面转换后风格统一。
  */
 const DARK_READER_THEME = {
   brightness: 100,
