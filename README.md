@@ -140,6 +140,13 @@ pnpm build        # 生产构建
 
 ## 更新日志
 
+### v1.0.9
+
+- 更新插件 Logo 为最终自定义版本
+- README 增加设置页与应用效果截图预览
+- 移除仓库内内部审查/计划文档，仅保留公开素材
+- 提交 gradle wrapper jar，全新克隆可直接构建
+
 ### v1.0.8
 
 - 设置页改用 Halo 官方 VPageHeader / VCard / VDescription / VTag 组件，与官方页面风格统一
