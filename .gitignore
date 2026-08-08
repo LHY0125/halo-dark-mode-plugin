@@ -1,8 +1,8 @@
 .gradle/
 build/
-!gradle/wrapper/gradle-wrapper.jar
 *.class
 *.jar
+!gradle/wrapper/gradle-wrapper.jar
 *.war
 *.log
 *.tmp
