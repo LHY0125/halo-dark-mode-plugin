@@ -31,11 +31,7 @@ const modeOptions: { value: ThemeMode; label: string; description: string }[] = 
         当前生效：<strong>{{ currentEffectiveMode }}</strong>
       </div>
 
-      <div
-        class="dark-mode-settings__options"
-        role="radiogroup"
-        aria-label="主题模式"
-      >
+      <div class="dark-mode-settings__options" role="radiogroup" aria-label="主题模式">
         <button
           v-for="option in modeOptions"
           :key="option.value"
@@ -111,7 +107,9 @@ const modeOptions: { value: ThemeMode; label: string; description: string }[] = 
   text-align: left;
   border-radius: 0.375rem;
   cursor: pointer;
-  transition: background-color 0.15s, border-color 0.15s;
+  transition:
+    background-color 0.15s,
+    border-color 0.15s;
 }
 
 .dark-mode-settings__option:hover {

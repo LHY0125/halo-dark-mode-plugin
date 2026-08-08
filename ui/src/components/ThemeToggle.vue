@@ -35,7 +35,9 @@ const { isDark, toggle } = useDarkMode()
   font: inherit;
   cursor: pointer;
   border-radius: 0.25rem;
-  transition: background-color 0.15s, color 0.15s;
+  transition:
+    background-color 0.15s,
+    color 0.15s;
   user-select: none;
 }
 
