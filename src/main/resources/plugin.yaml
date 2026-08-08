@@ -10,13 +10,13 @@ spec:
   requires: ">=2.25.0"
   author:
     name: LHY
-    website: https://github.com/LHY
+    website: https://github.com/LHY0125
   logo: logo.png
-  homepage: https://github.com/LHY/dark-mode#readme
-  repo: https://github.com/LHY/dark-mode
-  issues: https://github.com/LHY/dark-mode/issues
+  homepage: https://github.com/LHY0125/halo-dark-mode-plugin#readme
+  repo: https://github.com/LHY0125/halo-dark-mode-plugin
+  issues: https://github.com/LHY0125/halo-dark-mode-plugin/issues
   displayName: "深色模式"
   description: "为 Halo 后台管理面板提供深色/浅色模式切换，支持跟随系统、手动切换和偏好记忆"
   license:
     - name: "GPL-3.0"
-      url: "https://github.com/LHY/dark-mode/blob/main/LICENSE"
+      url: "https://github.com/LHY0125/halo-dark-mode-plugin/blob/main/LICENSE"
