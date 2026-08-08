@@ -39,3 +39,4 @@ __pycache__/
 # 内部审查/计划文档不入库，仅保留本地
 docs/*.md
 docs/**/*.md
+docs/原版logo.png
