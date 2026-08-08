@@ -5,6 +5,11 @@ plugins {
 
 group 'run.halo.darkmode.ui'
 
+node {
+    // 使用系统安装的 Node.js，避免 Gradle 下载的本地 Node 目录缺失时失败
+    download = false
+}
+
 tasks.register('pnpmBuild', PnpmTask) {
     group = 'build'
     description = 'Build the UI project using pnpm'

@@ -232,3 +232,32 @@
     background-color: oklch(30% 0.04 160 / 50%);
   }
 }
+/* ===== Monaco Editor（日志查看器，JS 主题优先，此处仅兜底） ===== */
+html[data-halo-theme="dark"] .monaco-editor.vs,
+html[data-halo-theme="dark"] .monaco-editor.vs .margin,
+html[data-halo-theme="dark"] .monaco-editor.vs .lines-content,
+html[data-halo-theme="dark"] .monaco-editor.vs .monaco-scrollable-element {
+  background-color: var(--halo-bg-input) !important;
+  color: var(--halo-text-primary) !important;
+}
+html[data-halo-theme="dark"] .monaco-editor.vs .line-numbers {
+  color: var(--halo-text-tertiary) !important;
+}
+html[data-halo-theme="dark"] .monaco-editor.vs .cursor {
+  border-color: var(--halo-text-primary) !important;
+}
+html[data-halo-theme="dark"] .monaco-editor.vs .selected-text,
+html[data-halo-theme="dark"] .monaco-editor.vs .view-overlays .selected-text {
+  background-color: oklch(30% 0.04 160 / 50%) !important;
+}
+html[data-halo-theme="dark"] .monaco-editor.vs .find-widget,
+html[data-halo-theme="dark"] .monaco-editor.vs .monaco-hover {
+  background-color: var(--halo-bg-dropdown) !important;
+  color: var(--halo-text-primary) !important;
+}
+
+/* ===== 编辑器链接（覆盖通用链接色规则） ===== */
+html[data-halo-theme="dark"] .ProseMirror a,
+html[data-halo-theme="dark"] .tiptap a {
+  color: var(--halo-text-link) !important;
+}

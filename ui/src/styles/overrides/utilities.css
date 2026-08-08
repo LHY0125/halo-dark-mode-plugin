@@ -62,10 +62,7 @@
   }
 
   /* ===== 链接 ===== */
-  a:not([class*="text-"]),
-  .hover\:text-gray-900:hover,
-  .hover\:text-gray-800:hover,
-  .hover\:text-gray-700:hover {
+  html[data-halo-theme="dark"] a:not([class*="text-"]) {
     color: var(--halo-text-link);
   }
 

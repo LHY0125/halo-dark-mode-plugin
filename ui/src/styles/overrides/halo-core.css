@@ -1,11 +1,14 @@
+/* ===== 根元素背景（html 自身携带属性，需独立选择器） ===== */
+html[data-halo-theme="dark"] {
+  background-color: var(--halo-bg-body) !important;
+}
 /* ============================================================
    Halo Dark Mode — Halo 核心 BEM 类覆盖
    基于 Halo 2.25 真实 DOM 扫描（demo.halocms.site）得出的选择器
    ============================================================ */
 
 [data-halo-theme="dark"] {
-  /* ===== 页面根背景（body 溢出时兜底） ===== */
-  html,
+  /* ===== 页面根背景（body 溢出时兜底，html 见文件顶部独立规则） ===== */
   body {
     background-color: var(--halo-bg-body) !important;
     color: var(--halo-text-primary);
@@ -100,14 +103,6 @@
   .entity-field-description {
     color: var(--halo-text-secondary);
   }
-  .entity-field-title a,
-  .entity-field-title-body a {
-    color: var(--halo-text-primary);
-  }
-  .entity-field-title a:hover,
-  .entity-field-title-body a:hover {
-    color: var(--halo-text-link);
-  }
 
   /* ===== 分页 ===== */
   .pagination {
@@ -131,8 +126,7 @@
   /* ===== 标签/徽章（BEM） ===== */
   .tag-wrapper,
   .tag-default,
-  .tag-pill,
-  [class*="tag-"] {
+  .tag-pill {
     background-color: var(--halo-bg-hover);
     color: var(--halo-text-secondary);
   }
@@ -206,10 +200,10 @@
     border-color: var(--halo-border-light);
   }
   .description-item__label {
-    color: var(--halo-text-secondary);
+    color: var(--halo-text-secondary) !important;
   }
   .description-item__content {
-    color: var(--halo-text-primary);
+    color: var(--halo-text-primary) !important;
   }
 
   /* ===== 已选指示器 ===== */
@@ -265,8 +259,50 @@
     border-color: var(--halo-border-base);
   }
 
-  /* ===== 通用链接 ===== */
-  a:not([class]) {
-    color: var(--halo-text-link);
-  }
+
+}
+/* ===== 侧边栏激活菜单（Halo 核心 .menu-item-title.active） ===== */
+html[data-halo-theme="dark"] .menu-item-title.active,
+html[data-halo-theme="dark"] .menu-item-title.active:hover {
+  background-color: var(--halo-menu-item-active) !important;
+  color: var(--halo-text-primary) !important;
+}
+html[data-halo-theme="dark"] .menu-item-title.active::after {
+  background: var(--halo-accent-primary) !important;
+}
+
+/* ===== 空状态标题 ===== */
+html[data-halo-theme="dark"] .empty-wrapper .empty-title {
+  color: var(--halo-text-secondary) !important;
+}
+
+/* ===== 提示条（Alert） ===== */
+html[data-halo-theme="dark"] .alert-wrapper {
+  background-color: var(--halo-bg-card) !important;
+  border-color: var(--halo-border-base) !important;
+  color: var(--halo-text-primary) !important;
+}
+html[data-halo-theme="dark"] .alert-wrapper .alert-title,
+html[data-halo-theme="dark"] .alert-wrapper .alert-description,
+html[data-halo-theme="dark"] .alert-wrapper .alert-icon {
+  color: var(--halo-text-secondary) !important;
+}
+html[data-halo-theme="dark"] .alert-wrapper.alert-warning {
+  border-color: oklch(40% 0.12 85) !important;
+}
+html[data-halo-theme="dark"] .alert-wrapper.alert-error {
+  border-color: oklch(40% 0.17 25) !important;
+}
+html[data-halo-theme="dark"] .alert-wrapper.alert-success {
+  border-color: oklch(40% 0.14 150) !important;
+}
+
+/* ===== 实体列表标题链接（覆盖通用链接色，hover 变链接色） ===== */
+html[data-halo-theme="dark"] .entity-field-title a,
+html[data-halo-theme="dark"] .entity-field-title-body a {
+  color: var(--halo-text-primary) !important;
+}
+html[data-halo-theme="dark"] .entity-field-title a:hover,
+html[data-halo-theme="dark"] .entity-field-title-body a:hover {
+  color: var(--halo-text-link) !important;
 }

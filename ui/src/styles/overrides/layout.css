@@ -55,8 +55,7 @@
   }
 
   /* ===== 页面标题 ===== */
-  .page-title,
-  .v-card-title {
+  .page-title {
     color: var(--halo-text-primary);
   }
 }

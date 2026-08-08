@@ -87,3 +87,16 @@
     border-color: var(--halo-border-base);
   }
 }
+/* ===== 强表单覆盖（scoped 哈希类特异性更高，需 html 前缀 + !important） ===== */
+html[data-halo-theme="dark"] input:not([type="checkbox"]):not([type="radio"]):not([type="color"]),
+html[data-halo-theme="dark"] textarea,
+html[data-halo-theme="dark"] select {
+  background-color: var(--halo-bg-input) !important;
+  color: var(--halo-text-primary) !important;
+  border-color: var(--halo-border-input) !important;
+}
+html[data-halo-theme="dark"] input:not([type="checkbox"]):not([type="radio"]):not([type="color"])::placeholder,
+html[data-halo-theme="dark"] textarea::placeholder,
+html[data-halo-theme="dark"] select::placeholder {
+  color: var(--halo-text-tertiary) !important;
+}

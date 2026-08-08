@@ -10,6 +10,8 @@ Halo 2.25 暗色模式插件 — 为 Halo 后台管理面板提供深色/浅色�
 - ⚡ **瞬间切换**：CSS 变量瞬时生效，无可见闪烁
 - 🧩 **侧边栏注入**：切换按钮自动出现在侧边栏底部（UserProfileBanner 上方）
 - ⚙️ **设置页面**：提供详细的模式选择界面（菜单 → 偏好设置 → 深色模式）
+- 🔍 **Dark Reader 引擎**：内置成熟的开源暗色转换引擎，自动分析页面 CSS 与 DOM，
+  第三方插件页面的黑字/白底也能自动转换，不再依赖逐页手工覆盖
 - 🎨 **OKLCH 色彩空间**：感知均匀，暗色模式天然适配，WCAG AA 对比度保证
 - 📦 **零后端依赖**：纯前端实现，不需要后端 API
 - ✅ **覆盖已验证**：仪表盘、内容管理（文章/页面/评论）、链接、订阅、瞬间、用户、主题、设置、编辑器、模态框等页面已针对 Halo 2.25 真实 DOM 逐一验证
@@ -69,6 +71,7 @@ pnpm test:unit     # 单元测试
 └── ui/
     └── src/
         ├── index.ts                   # definePlugin 入口
+        ├── darkreader-engine.ts       # Dark Reader 通用暗色引擎
         ├── injector.ts                # ThemeToggle 侧边栏注入器
         ├── composables/
         │   ├── useDarkMode.ts         # 核心状态管理（模块级单例）

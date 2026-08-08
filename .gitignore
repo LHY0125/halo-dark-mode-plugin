@@ -10,8 +10,16 @@ build/
 *.iml
 .DS_Store
 node_modules/
+.pnpm-store/
 dist/
 # Playwright 测试工具 — 只跟踪脚本和配置，忽略输出/截图/缓存
 workplace/*
 !workplace/*.py
 !workplace/*.yaml
+
+# 暗色扫描输出与会话
+scripts/output/
+scripts/.browser-profile/
+
+# Dark Reader 源码下载目录（构建依赖已 vendor 到 ui/vendor/darkreader）
+docs/darkreader/

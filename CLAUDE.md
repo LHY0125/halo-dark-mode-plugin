@@ -54,6 +54,7 @@ halo-dark-mode-plugin/
 │
 ├── 前端 (Vue 3 / TypeScript)       ← 核心实现
 │   ├── index.ts                    ← definePlugin() 入口，注册路由+组件
+│   ├── darkreader-engine.ts        ← Dark Reader 通用暗色引擎
 │   ├── injector.ts                 ← ThemeToggle 侧边栏注入器（MutationObserver 方案）
 │   ├── composables/
 │   │   ├── useDarkMode.ts          ← 单例状态管理（light/dark/auto + localStorage 持久化）
@@ -80,33 +81,39 @@ halo-dark-mode-plugin/
 ### 主题切换机制
 
 - **触发方式**：`document.documentElement` 上设置/移除 `data-halo-theme="dark"` 属性
+- **主引擎**：Dark Reader（本地 vendored 于 `ui/vendor/darkreader`，API 包由
+  `npm run api` 构建），监听 `useDarkMode().isDark`，深色时 `enable()`，浅色时
+  `disable()`，可自动分析 Halo 核心与第三方插件的动态 DOM
 - **CSS 变量体系**：所有颜色通过 `--halo-*` 前缀的 CSS 自定义属性控制，一个语义变量对应一个视觉属性
 - **颜色空间**：全部使用 OKLCH（感知均匀，暗色模式天然适配）
 - **暗色配色策略**：用亮度层次区分背景（越"高"的层越亮），中性色含微量蓝色调，强调色略降饱和
+- **CSS 覆盖定位**：现有 `overrides/` 仅作为 Dark Reader 的兼容层与兜底，
+  不再逐页新增手工转换规则；新页面残留统一交给 Dark Reader 处理
 
 ### ⚠️ 最关键的教训：Halo 2.25 用 UnoCSS，不是 Tailwind
 
-Halo 2.25 的 Console 实际使用 **UnoCSS**（hash 类如 `uno-*`）加 **BEM 语义类**。**不要写 `.bg-white`、`.text-gray-900`、`.v-card` 这类 Tailwind/Vuetify 原子选择器**——它们在真实 DOM 中不存在，覆盖会静默失效。
+Halo 2.25 的 Console 实际使用 **UnoCSS**（hash 类如 `uno-*`）加 **BEM 语义aliyun "curl -sI --max-time 5 http://localhost/ 2>&1 |类**。**不要写 `.bg-white`、`.text-gray-900`、`.v-card` 这类 Tailwind/Vuetify 原子选择器**——它们在真实 DOM 中不存在，覆盖会静默失效。
 
 真实 DOM 里的容器类名（已被 `halo-core.css` 覆盖）：
 
-| 语义 | 真实类名 |
-|------|---------|
-| 页面顶栏 | `.page-header` / `.page-header__title-text` |
-| 列表卡片容器 | `.card-wrapper` |
-| 文章/用户列表项标题 | `.entity-field-title` / `.entity-field-title-body` |
-| 分页 | `.pagination` / `.pagination__btn` |
-| 标签 | `.tag-default` / `.tag-content` |
-| 模态框 | `.modal-content` / `.modal-header` / `.modal-body` / `.modal-footer` |
-| 详情页描述项 | `.description-item-wrapper` / `.description-item__label` / `.description-item__content` |
-| Toast | `.toast-container .toast-body` |
-| 用户头像 | `.avatar-wrapper` / `.avatar-circle` |
+| 语义                | 真实类名                                                                                      |
+| ------------------- | --------------------------------------------------------------------------------------------- |
+| 页面顶栏            | `.page-header` / `.page-header__title-text`                                               |
+| 列表卡片容器        | `.card-wrapper`                                                                             |
+| 文章/用户列表项标题 | `.entity-field-title` / `.entity-field-title-body`                                        |
+| 分页                | `.pagination` / `.pagination__btn`                                                        |
+| 标签                | `.tag-default` / `.tag-content`                                                           |
+| 模态框              | `.modal-content` / `.modal-header` / `.modal-body` / `.modal-footer`                  |
+| 详情页描述项        | `.description-item-wrapper` / `.description-item__label` / `.description-item__content` |
+| Toast               | `.toast-container .toast-body`                                                              |
+| 用户头像            | `.avatar-wrapper` / `.avatar-circle`                                                      |
 
 新增覆盖时：**先到真实环境确认类名，不要凭经验写**。
 
 ### 覆盖策略（重写后）
 
 `halo-core.css` 是主要覆盖文件，按语义类精准覆盖。它包含三类规则：
+
 1. **BEM 语义类**（如 `.card-wrapper`）— 直接 `[data-halo-theme="dark"] .card-wrapper { background-color: var(--halo-bg-card) }`
 2. **通用 UnoCSS 工具类**（如 `.bg-gray-50`、`.hover:text-gray-600`）— 批量覆盖文字/背景/边框
 3. **根背景兜底** — `html, body { background-color: var(--halo-bg-body) !important }`（body 不设暗色会在溢出时露白）
@@ -134,6 +141,15 @@ Halo 扩展点系统**没有侧边栏插槽**。`injector.ts` 用 `MutationObser
 
 后端极简 — `DarkModePlugin extends BasePlugin` 仅含 `start()`/`stop()` 生命周期钩子。所有核心逻辑在前端。插件不依赖后端 Setting API。
 
+## 打包约定（必须）
+
+每次执行 `./gradlew build` 打 JAR 前，**必须先递增版本标签**：
+
+1. 修改 `gradle.properties` 中的 `version`（如 `1.0.2` → `1.0.3`）
+2. 同步更新 `src/main/java/run/halo/darkmode/DarkModePlugin.java` 的 `@since`
+3. 构建完成后核对 `build/libs/plugin-dark-mode-<新版本>.jar` 存在，且 JAR 内的
+   `ui/style.css`、`ui/main.js` 包含本次改动（用关键字检查，例如新增类名）
+4. 向用户交付时明确给出新 JAR 路径和版本号，避免线上仍加载旧 bundle 的混淆
 ## 验证工作流（必须）
 
 对 CSS 覆盖的任何改动，都要在**真实 Halo 环境**验证，不能只靠 `vite build` 通过：

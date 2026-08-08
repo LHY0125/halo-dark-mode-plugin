@@ -1,73 +1,21 @@
 /* ============================================================
-   Halo Dark Mode — @halo-dev/components 组件库覆盖
-   覆盖 Halo 组件库中的 VCard, VModal, VDropdown, VTag 等
+   Halo Dark Mode — Halo 组件库覆盖（已清理）
+   已删除 Halo 2.25 中不存在的 Vuetify 类（.v-card 等），
+   真实 DOM 类覆盖请优先维护 halo-core.css。
    ============================================================ */
 
 [data-halo-theme="dark"] {
-  /* ===== 卡片 VCard ===== */
-  .v-card,
-  [class*="v-card"] {
-    background-color: var(--halo-bg-card);
-    border-color: var(--halo-border-base);
-    color: var(--halo-text-primary);
-  }
-
-  /* ===== 模态框 VModal ===== */
-  .v-modal,
-  .modal-container,
-  [class*="modal"] {
-    background-color: var(--halo-bg-card);
-    color: var(--halo-text-primary);
-  }
-
-  /* ===== 下拉菜单 VDropdown ===== */
-  .v-dropdown,
-  .dropdown-menu,
-  [class*="dropdown"] {
-    background-color: var(--halo-bg-dropdown);
-    border-color: var(--halo-border-base);
-    color: var(--halo-text-primary);
-  }
-
-  .v-dropdown-item:hover,
-  .dropdown-item:hover {
-    background-color: var(--halo-bg-hover);
-  }
-
-  /* ===== 提示框 VTooltip ===== */
-  .v-tooltip,
-  [class*="tooltip"] {
-    background-color: var(--halo-bg-tooltip);
-    color: var(--halo-text-inverse);
-  }
-
-  /* ===== 标签/徽章 VTag, VBadge ===== */
-  .v-tag,
-  [class*="tag"],
-  .v-badge,
-  [class*="badge"] {
-    background-color: var(--halo-tag-bg);
-    color: var(--halo-tag-text);
-  }
-
-  /* ===== 按钮 ===== */
-  .btn-default,
-  .btn-secondary,
-  button:not([class*="btn-primary"]):not([class*="btn-danger"]) {
-    background-color: var(--halo-bg-card);
-    color: var(--halo-text-primary);
-    border-color: var(--halo-border-base);
-  }
-
-  .btn-default:hover,
-  .btn-secondary:hover {
-    background-color: var(--halo-bg-hover);
+  /* ===== 模态框（具体类 + !important，防被核心 scoped 样式覆盖） ===== */
+  .modal-content,
+  .modal-header,
+  .modal-body,
+  .modal-footer {
+    background-color: var(--halo-bg-card) !important;
+    color: var(--halo-text-primary) !important;
   }
 
   /* ===== 表格 VTable ===== */
-  table,
-  .v-table,
-  [class*="table"] {
+  table {
     background-color: var(--halo-bg-card);
     color: var(--halo-text-primary);
   }
@@ -94,49 +42,29 @@
   }
 
   /* ===== 分页 ===== */
-  .pagination,
-  .v-pagination {
+  .pagination {
     color: var(--halo-text-secondary);
   }
 
-  .pagination .active,
-  .v-pagination .active {
+  .pagination .active {
     background-color: var(--halo-accent-primary);
     color: var(--halo-accent-primary-text);
   }
 
   /* ===== 面包屑 ===== */
-  .breadcrumb,
-  .v-breadcrumb {
+  .breadcrumb {
     color: var(--halo-text-secondary);
   }
 
-  .breadcrumb a,
-  .v-breadcrumb a {
+  .breadcrumb a {
     color: var(--halo-text-link);
   }
 
   /* ===== Toast / 通知 ===== */
-  .v-toast,
   .toast-notification,
   [class*="toast"] {
     background-color: var(--halo-bg-card);
     color: var(--halo-text-primary);
     border-color: var(--halo-border-base);
-  }
-
-  /* ===== 步骤条 ===== */
-  .v-steps,
-  [class*="steps"] {
-    color: var(--halo-text-secondary);
-  }
-
-  /* ===== 开关 VSwitch ===== */
-  .v-switch-track {
-    background-color: var(--halo-bg-disabled);
-  }
-
-  .v-switch-track[aria-checked="true"] {
-    background-color: var(--halo-accent-primary);
   }
 }

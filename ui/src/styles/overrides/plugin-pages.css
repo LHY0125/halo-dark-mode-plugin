@@ -247,3 +247,137 @@
     color: var(--halo-text-primary) !important;
   }
 }
+/* ===== AstraHub / 心愿便签（共用 ah-* UI） ===== */
+html[data-halo-theme="dark"] .ah-card,
+html[data-halo-theme="dark"] .ah-topbar,
+html[data-halo-theme="dark"] .ah-topbar-search,
+html[data-halo-theme="dark"] .ah-float-nav {
+  background-color: var(--halo-bg-card) !important;
+  border-color: var(--halo-border-base) !important;
+  color: var(--halo-text-primary) !important;
+}
+html[data-halo-theme="dark"] .ah-topbar-search {
+  background-color: var(--halo-bg-input) !important;
+}
+html[data-halo-theme="dark"] .ah-topbar-brand,
+html[data-halo-theme="dark"] .planet-hero-title {
+  color: var(--halo-text-primary) !important;
+}
+html[data-halo-theme="dark"] .ah-topbar-search input {
+  background-color: transparent !important;
+  color: var(--halo-text-primary) !important;
+}
+html[data-halo-theme="dark"] .planet-links-more {
+  background-color: var(--halo-bg-card) !important;
+  color: var(--halo-text-secondary) !important;
+}
+
+/* ===== RSS 订阅（links/rss） ===== */
+html[data-halo-theme="dark"] .subscription-panel,
+html[data-halo-theme="dark"] .feed-main,
+html[data-halo-theme="dark"] .feed-toolbar,
+html[data-halo-theme="dark"] .feed-stream,
+html[data-halo-theme="dark"] .feed-stream__footer {
+  background-color: var(--halo-bg-card) !important;
+  border-color: var(--halo-border-base) !important;
+  color: var(--halo-text-primary) !important;
+}
+html[data-halo-theme="dark"] .feed-status-tabs {
+  background-color: var(--halo-bg-hover) !important;
+  color: var(--halo-text-secondary) !important;
+}
+html[data-halo-theme="dark"] .feed-brief__title,
+html[data-halo-theme="dark"] .feed-stream p,
+html[data-halo-theme="dark"] .feed-stream a,
+html[data-halo-theme="dark"] .subscription-panel a,
+html[data-halo-theme="dark"] .subscription-panel span {
+  color: var(--halo-text-primary) !important;
+}
+
+/* ===== 私密文章插件 ===== */
+html[data-halo-theme="dark"] .focus-card,
+html[data-halo-theme="dark"] .overview-card,
+html[data-halo-theme="dark"] .list-card,
+html[data-halo-theme="dark"] .empty-state {
+  background-color: var(--halo-bg-card) !important;
+  border-color: var(--halo-border-base) !important;
+  color: var(--halo-text-primary) !important;
+}
+html[data-halo-theme="dark"] .overview-card h2,
+html[data-halo-theme="dark"] .page-shell h2,
+html[data-halo-theme="dark"] .overview-stats dd,
+html[data-halo-theme="dark"] .overview-stats dt {
+  color: var(--halo-text-primary) !important;
+}
+
+/* ===== AI 评论自动处理插件 ===== */
+html[data-halo-theme="dark"] .settings-container,
+html[data-halo-theme="dark"] .setting-panel,
+html[data-halo-theme="dark"] .tabs-wrap,
+html[data-halo-theme="dark"] .sidebar-card,
+html[data-halo-theme="dark"] .list-empty,
+html[data-halo-theme="dark"] .reply-card {
+  background-color: var(--halo-bg-card) !important;
+  border-color: var(--halo-border-base) !important;
+  color: var(--halo-text-primary) !important;
+}
+html[data-halo-theme="dark"] .form-row,
+html[data-halo-theme="dark"] .list-col,
+html[data-halo-theme="dark"] .panel-header,
+html[data-halo-theme="dark"] .card-footer {
+  background-color: var(--halo-bg-hover) !important;
+  color: var(--halo-text-primary) !important;
+}
+html[data-halo-theme="dark"] .section-header__text h3,
+html[data-halo-theme="dark"] .sidebar-header h4,
+html[data-halo-theme="dark"] .panel-header h3,
+html[data-halo-theme="dark"] .reply-card h3 {
+  color: var(--halo-text-primary) !important;
+}
+html[data-halo-theme="dark"] .wake-word-tag {
+  background-color: var(--halo-bg-hover) !important;
+  color: var(--halo-text-secondary) !important;
+}
+
+/* ===== 数据工坊 / 代码注入器等工具页语义容器 ===== */
+html[data-halo-theme="dark"] .data-studio-card-body,
+html[data-halo-theme="dark"] .injector-view-card-body,
+html[data-halo-theme="dark"] .injector-editor-container {
+  background-color: var(--halo-bg-card) !important;
+  border-color: var(--halo-border-base) !important;
+  color: var(--halo-text-primary) !important;
+}
+
+/* ===== 示例插件页 ===== */
+html[data-halo-theme="dark"] main section#plugin-starter {
+  background-color: var(--halo-bg-body) !important;
+  color: var(--halo-text-primary) !important;
+}
+
+/* ===== 友链卡片徽章 ===== */
+html[data-halo-theme="dark"] .link-badge {
+  background-color: var(--halo-bg-hover) !important;
+  color: var(--halo-text-primary) !important;
+  border-color: var(--halo-border-base) !important;
+}
+/* ===== 日程日历插件（time-column 布局） ===== */
+html[data-halo-theme="dark"] .time-column__header,
+html[data-halo-theme="dark"] .time-column__body,
+html[data-halo-theme="dark"] [class*="time-column"] {
+  background-color: var(--halo-bg-card) !important;
+  color: var(--halo-text-primary) !important;
+  border-color: var(--halo-border-base) !important;
+}
+html[data-halo-theme="dark"] .entry-card-header__title {
+  color: var(--halo-text-primary) !important;
+}
+
+/* ===== 存储工具箱补充类 ===== */
+html[data-halo-theme="dark"] .stat-value,
+html[data-halo-theme="dark"] .stat-card .card-title,
+html[data-halo-theme="dark"] .panel-card .card-title {
+  color: var(--halo-text-primary) !important;
+}
+html[data-halo-theme="dark"] .bar-track {
+  background-color: var(--halo-bg-disabled) !important;
+}
