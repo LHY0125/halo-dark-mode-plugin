@@ -128,6 +128,11 @@ pnpm build        # 生产构建
 
 ## 更新日志
 
+### v1.0.7
+
+- 移除设置页方向键切换、roving tabindex 与 ARIA 单选组语义，保留原生按钮点击切换
+- 同步清理 README 中已过时的「设置选项支持键盘操作」描述
+
 ### v1.0.6
 
 - 深色模式设置入口移至 Halo 官方「外观」分组
@@ -138,7 +143,6 @@ pnpm build        # 生产构建
 
 - 同步设置 `color-scheme`，缓解深色模式刷新闪烁
 - 增加多标签页主题同步与 `useDarkMode` 单元测试
-- 侧边栏切换按钮与设置选项支持键盘操作
 - 后端日志改用 Lombok `@Slf4j`
 - 裁剪 vendored `package.json`，新增 Dark Reader `SHA256SUMS` 完整性校验
 - `plugin.yaml` 改为安装后由用户手动启用
