@@ -21,6 +21,11 @@ workplace/*
 scripts/output/
 scripts/.browser-profile/
 
+# 本地环境变量 / API token，严禁入库
+.env
+.env.*
+!.env.example
+
 # 本地项目说明文件，不入库
 AGENTS.md
 CLAUDE.md
