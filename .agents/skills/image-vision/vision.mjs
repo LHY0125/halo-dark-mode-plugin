@@ -1,18 +1,22 @@
 // 视觉识别脚本：调用 OpenCode Go 的 qwen3.6-plus 视觉模型
 // 用法：node scripts/vision.mjs <图片路径或URL> [问题]
 import { readFileSync, existsSync } from "node:fs";
-import { basename, extname, join } from "node:path";
+import { extname, join, dirname } from "node:path";
+import { fileURLToPath } from "node:url";
 
-// 自动从项目 .env 读取配置
-function loadEnv() {
-  const envPath = join(process.cwd(), ".env");
+// 技能目录（vision.mjs 所在目录），用于定位同目录的 .env
+const SKILL_DIR = dirname(fileURLToPath(import.meta.url));
+
+// 读取 .env：优先技能同目录（自包含、可整目录迁移），缺失时回退项目根目录
+function loadEnvFile(envPath) {
   if (!existsSync(envPath)) return;
   for (const line of readFileSync(envPath, "utf8").split("\n")) {
     const m = line.match(/^([A-Z_]+)=(.*)$/);
-    if (m && !process.env[m[1]]) process.env[m[1]] = m[2];
+    if (m && !process.env[m[1]]) process.env[m[1]] = m[2].trim();
   }
 }
-loadEnv();
+loadEnvFile(join(SKILL_DIR, ".env"));
+loadEnvFile(join(process.cwd(), ".env"));
 
 const API_KEY = process.env.OPENCODE_API_KEY;
 const BASE_URL = "https://opencode.ai/zen/go/v1";
