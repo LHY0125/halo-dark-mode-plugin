@@ -7,6 +7,7 @@ build/
 *.log
 *.tmp
 .idea/
+.vscode/
 *.iml
 .DS_Store
 node_modules/
@@ -29,6 +30,10 @@ scripts/.browser-profile/
 # 本地项目说明文件，不入库
 AGENTS.md
 CLAUDE.md
+
+# Agent 工具目录（本地技能/配置），不入库
+.agents/
+.claude/
 
 # Dark Reader 仅跟踪构建所需文件，完整源码保留在本地
 third-party/darkreader/*
