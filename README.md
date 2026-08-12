@@ -32,13 +32,15 @@
 
 以下截图展示插件在 Halo 后台的实际效果。
 
-![插件设置界面](docs/screenshots/插件界面.png)
+![插件信息界面](docs\screenshots\插件界面1.png)
 
-![后台深色模式效果 1](docs/screenshots/photo1.png)
+![插件模式选择界面](docs\screenshots\插件界面2.png)
 
-![后台深色模式效果 2](docs/screenshots/photo2.png)
+![文章写作界面展示](docs\screenshots\文章写作界面展示.png)
 
-![后台深色模式效果 3](docs/screenshots/photo3.png)
+![仪表盘界面展示](docs\screenshots\仪表盘界面展示.png)
+
+![主题界面展示](docs\screenshots\主题界面展示.png)
 
 ## 技术原理
 
@@ -140,48 +142,9 @@ pnpm build        # 生产构建
 
 ## 更新日志
 
-### v1.0.9
+### v1.1.0
 
-- 更新插件 Logo 为最终自定义版本
-- README 增加设置页与应用效果截图预览
-- 移除仓库内内部审查/计划文档，仅保留公开素材
-- 提交 gradle wrapper jar，全新克隆可直接构建
-
-### v1.0.8
-
-- 设置页改用 Halo 官方 VPageHeader / VCard / VDescription / VTag 组件，与官方页面风格统一
-- 精简插件自身 CSS 变量，仅保留设置页所需变量
-
-### v1.0.7
-
-- 移除设置页方向键切换、roving tabindex 与 ARIA 单选组语义，保留原生按钮点击切换
-- 同步清理 README 中已过时的「设置选项支持键盘操作」描述
-
-### v1.0.6
-
-- 深色模式设置入口移至 Halo 官方「外观」分组
-- 移除侧边栏底部注入的切换按钮，设置页成为唯一入口
-- 更新运行时验证脚本：直接驱动主题状态，不再依赖侧边栏按钮
-
-### v1.0.5
-
-- 同步设置 `color-scheme`，缓解深色模式刷新闪烁
-- 增加多标签页主题同步与 `useDarkMode` 单元测试
-- 后端日志改用 Lombok `@Slf4j`
-- 裁剪 vendored `package.json`，新增 Dark Reader `SHA256SUMS` 完整性校验
-- `plugin.yaml` 改为安装后由用户手动启用
-
-### v1.0.4
-
-- 改为纯 Dark Reader 引擎，移除手工 CSS 覆盖
-- 移除 Monaco 手动主题同步，暗色转换统一交给 Dark Reader
-- 整理 `third-party/darkreader` 目录，仅保留构建所需文件
-
-### v1.0.3
-
-- 引入 Dark Reader 通用暗色引擎
-- 保留原有手工 CSS 作为兼容层，覆盖核心页面与第三方插件页面
-- 增加 Monaco 日志查看器主题同步
+- 更新插件 Logo 为新的深色风格图标
 
 ## 许可证
 
