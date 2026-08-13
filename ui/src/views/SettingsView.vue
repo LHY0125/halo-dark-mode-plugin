@@ -2,10 +2,15 @@
 import type { ThemeMode } from '../composables/useDarkMode'
 import { useDarkMode } from '../composables/useDarkMode'
 import {
+  IconCheckboxCircle,
+  IconCheckboxFill,
   IconPalette,
   VCard,
   VDescription,
   VDescriptionItem,
+  VEntity,
+  VEntityContainer,
+  VEntityField,
   VPageHeader,
   VTag,
 } from '@halo-dev/components'
@@ -43,67 +48,41 @@ const modeOptions: { value: ThemeMode; label: string; description: string }[] = 
               <VTag>{{ currentEffectiveMode }}</VTag>
             </VDescriptionItem>
           </VDescription>
-
-          <div class="dark-mode-settings__options">
-            <button
-              v-for="option in modeOptions"
-              :key="option.value"
-              type="button"
-              class="dark-mode-settings__option"
-              :class="{ 'is-active': theme === option.value }"
-              @click="setTheme(option.value)"
-            >
-              <div class="dark-mode-settings__option-label">{{ option.label }}</div>
-              <div class="dark-mode-settings__option-desc">{{ option.description }}</div>
-            </button>
-          </div>
         </div>
+
+        <VEntityContainer>
+          <VEntity
+            v-for="option in modeOptions"
+            :key="option.value"
+            :is-selected="theme === option.value"
+            @click="setTheme(option.value)"
+          >
+            <template #prepend>
+              <component
+                :is="theme === option.value ? IconCheckboxFill : IconCheckboxCircle"
+                class="dark-mode-settings__radio"
+                :class="{ 'is-checked': theme === option.value }"
+              />
+            </template>
+            <template #start>
+              <VEntityField :title="option.label" :description="option.description" />
+            </template>
+          </VEntity>
+        </VEntityContainer>
       </VCard>
     </div>
   </div>
 </template>
 
 <style scoped>
-.dark-mode-settings__options {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  margin-top: 1rem;
-}
-
-.dark-mode-settings__option {
-  width: 100%;
-  padding: 0.75rem 1rem;
-  border: 1px solid var(--halo-border-base);
-  background: transparent;
-  color: inherit;
-  font: inherit;
-  text-align: left;
-  border-radius: 0.375rem;
-  cursor: pointer;
-  transition:
-    background-color 0.15s,
-    border-color 0.15s;
-}
-
-.dark-mode-settings__option:hover {
-  background-color: var(--halo-bg-hover);
-}
-
-.dark-mode-settings__option.is-active {
-  background-color: var(--halo-menu-item-active);
-  border-color: var(--halo-accent-primary);
-}
-
-.dark-mode-settings__option-label {
-  font-size: 0.9375rem;
-  font-weight: 500;
-  color: var(--halo-text-primary);
-  margin-bottom: 0.125rem;
-}
-
-.dark-mode-settings__option-desc {
-  font-size: 0.8125rem;
+.dark-mode-settings__radio {
+  width: 1.125rem;
+  height: 1.125rem;
   color: var(--halo-text-tertiary);
+  transition: color 0.15s;
+}
+
+.dark-mode-settings__radio.is-checked {
+  color: var(--halo-accent-primary);
 }
 </style>
