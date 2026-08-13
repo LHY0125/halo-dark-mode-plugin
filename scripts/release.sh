@@ -5,13 +5,15 @@
 #              → 校验 JAR → 生成发布日志 → gh release → commit/tag/push
 #
 # 用法:
-#   ./scripts/release.sh [patch|minor|major] [--push] [--yes] [--dry-run]
+#   ./scripts/release.sh [patch|minor|major] [--push] [--yes] [--dry-run] [--no-bump]
 #     patch  → 1.1.0 → 1.1.1（默认）
 #     minor  → 1.1.0 → 1.2.0
 #     major  → 1.1.0 → 2.0.0
 #     --push     提交后自动 push main + tag（否则打印推送提示）
 #     --yes      跳过所有交互确认（供 Claude / CI 非交互调用）
 #     --dry-run  只预览版本递增与文件改动，不构建、不发布
+#     --no-bump  不递增版本，直接使用 gradle.properties 当前版本发布
+#                （适用于已手动递增过版本、或先 --dry-run 后再发布的场景）
 #
 # 依赖: git / gh / pnpm / Node / JDK（gradle.properties 已硬编码）
 # ============================================================
@@ -29,6 +31,7 @@ GH_REPO="LHY0125/halo-dark-mode-plugin"
 CONFIRM_ALL=""
 PUSH=""
 DRY_RUN=""
+NO_BUMP=""
 bump_type="patch"
 
 for arg in "$@"; do
@@ -36,8 +39,9 @@ for arg in "$@"; do
     --yes) CONFIRM_ALL=1 ;;
     --push) PUSH=1 ;;
     --dry-run) DRY_RUN=1 ;;
+    --no-bump) NO_BUMP=1 ;;
     patch|minor|major) bump_type="$arg" ;;
-    *) echo "未知参数: $arg" >&2; echo "用法: $0 [patch|minor|major] [--push] [--yes] [--dry-run]" >&2; exit 1 ;;
+    *) echo "未知参数: $arg" >&2; echo "用法: $0 [patch|minor|major] [--push] [--yes] [--dry-run] [--no-bump]" >&2; exit 1 ;;
   esac
 done
 
@@ -56,14 +60,18 @@ current="$(grep '^version=' "$GRADLE_PROPS" | tr -d '\r')"
 current="${current#version=}"
 IFS='.' read -r v_major v_minor v_patch <<<"$current"
 
-case "$bump_type" in
-  patch) v_patch=$((v_patch + 1)) ;;
-  minor) v_minor=$((v_minor + 1)); v_patch=0 ;;
-  major) v_major=$((v_major + 1)); v_minor=0; v_patch=0 ;;
-esac
-new_version="$v_major.$v_minor.$v_patch"
-
-echo "版本: $current → $new_version ($bump_type)"
+if [[ -n "$NO_BUMP" ]]; then
+  new_version="$current"
+  echo "使用当前版本: $new_version（--no-bump，不递增）"
+else
+  case "$bump_type" in
+    patch) v_patch=$((v_patch + 1)) ;;
+    minor) v_minor=$((v_minor + 1)); v_patch=0 ;;
+    major) v_major=$((v_major + 1)); v_minor=0; v_patch=0 ;;
+  esac
+  new_version="$v_major.$v_minor.$v_patch"
+  echo "版本: $current → $new_version ($bump_type)"
+fi
 
 # ---- dry-run：只预览不落地 ----
 if [[ -n "$DRY_RUN" ]]; then
@@ -149,7 +157,7 @@ gh release create "v$new_version" \
 echo "✅ Release v$new_version 已创建"
 
 # ---- 8. commit + tag + push ----
-git add "$GRADLE_PROPS" "$JAVA_FILE"
+git add "$GRADLE_PROPS" "$JAVA_FILE" "$CHANGELOG_FILE"
 git commit -m "chore: 升级 $new_version 正式版"
 git tag "v$new_version"
 
