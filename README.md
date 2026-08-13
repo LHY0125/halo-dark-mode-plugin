@@ -142,9 +142,7 @@ pnpm build        # 生产构建
 
 ## 更新日志
 
-### v1.1.0
-
-- 更新插件 Logo 为新的深色风格图标
+各版本详细变更见 [CHANGELOG.md](./CHANGELOG.md)。
 
 ## 许可证
 

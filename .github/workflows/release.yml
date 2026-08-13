@@ -1,0 +1,93 @@
+# Halo 暗色模式插件 — 自动发布
+# 推送 v* tag 时自动构建并创建 GitHub Release。
+# 若该 tag 的 Release 已存在（例如已用 ./scripts/release.sh 本地发布），则跳过。
+name: release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          # 完整历史：生成发布日志需要上一 tag 定位
+          fetch-depth: 0
+
+      - name: Setup JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.12.4
+
+      - name: Setup Node 18
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      # gradle.properties 里 org.gradle.java.home 指向本机 Windows JDK，
+      # Linux runner 上没有该路径，Gradle 会失败。剔除后走 JAVA_HOME（setup-java）。
+      - name: 移除本机 JDK 硬编码路径
+        run: sed -i '/^org.gradle.java.home=/d' gradle.properties
+
+      # tag 是 v1.1.0，JAR 名是 plugin-dark-mode-1.1.0.jar（无 v 前缀）
+      - name: 计算版本号
+        run: echo "VERSION=${GITHUB_REF_NAME#v}" >> "$GITHUB_ENV"
+
+      - name: 检查 Release 是否已存在
+        id: check
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if gh release view "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: 构建插件 JAR
+        if: steps.check.outputs.exists == 'false'
+        run: ./gradlew build
+
+      - name: 生成发布日志
+        if: steps.check.outputs.exists == 'false'
+        run: |
+          {
+            echo "Halo 深色模式 ${{ github.ref_name }}"
+            echo ""
+            if [[ -f CHANGELOG.md ]] && section="$(awk -v v="${{ github.ref_name }}" '$0 ~ "^## " v "([^#A-Za-z0-9.]|$)" { flag=1; next } flag && /^## / { exit } flag' CHANGELOG.md)" && [[ -n "$section" ]]; then
+              echo "$section"
+            else
+              PREV_TAG="$(git describe --tags --abbrev=0 "${{ github.ref_name }}^" 2>/dev/null || echo '')"
+              if [[ -n "$PREV_TAG" ]]; then
+                echo "变更（${PREV_TAG} → ${{ github.ref_name }}）："
+                echo ""
+                git log --oneline "${PREV_TAG}"..HEAD | sed 's/^/- /'
+              else
+                echo "首次发布"
+              fi
+            fi
+          } > RELEASE_NOTES.md
+
+      - name: 创建 GitHub Release
+        if: steps.check.outputs.exists == 'false'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create "${{ github.ref_name }}" \
+            --repo "$GITHUB_REPOSITORY" \
+            --title "${{ github.ref_name }}" \
+            --notes-file RELEASE_NOTES.md \
+            "build/libs/plugin-dark-mode-${VERSION}.jar"
