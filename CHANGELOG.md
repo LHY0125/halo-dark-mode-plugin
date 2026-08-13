@@ -1,6 +1,6 @@
 # 更新日志
 
-Halo 深色模式插件（`run.halo.darkmode`）的显著变更记录。版本号遵循[语义化版本（Semantic Versioning）](https://semver.org/lang/zh-CN/)规范：`MAJOR.MINOR.PATCH`。
+Halo 深色模式插件（`top.liuhangyv.darkmode`）的显著变更记录。版本号遵循[语义化版本（Semantic Versioning）](https://semver.org/lang/zh-CN/)规范：`MAJOR.MINOR.PATCH`。
 
 ## 定位
 
@@ -21,6 +21,18 @@ Halo 深色模式插件（`run.halo.darkmode`）的显著变更记录。版本�
 ## 历史说明
 
 > v1.0.5 之前的版本无独立 Release 记录，历史变更见 [GitHub Releases](https://github.com/LHY0125/halo-dark-mode-plugin/releases)。
+
+## v1.1.2（2026-08-13）
+
+### 行为变化
+- 插件自有 Java 包名由 `run.halo.darkmode` 迁移至 `top.liuhangyv.darkmode`，Gradle group 同步调整，符合 Halo 应用市场对保留命名空间的要求
+
+### 说明
+- 升级不影响既有主题偏好
+
+### 验证
+- 前端 8 项单元测试全部通过，`type-check` / `lint` / `build` 全绿
+- `./gradlew build` 构建成功，JAR 内主类已为 `top.liuhangyv.darkmode.DarkModePlugin`
 
 ## v1.1.1（2026-08-13）
 

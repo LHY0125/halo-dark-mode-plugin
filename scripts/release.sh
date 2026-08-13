@@ -24,7 +24,7 @@ REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$REPO_ROOT"
 
 GRADLE_PROPS="gradle.properties"
-JAVA_FILE="src/main/java/run/halo/darkmode/DarkModePlugin.java"
+JAVA_FILE="src/main/java/top/liuhangyv/darkmode/DarkModePlugin.java"
 GH_REPO="LHY0125/halo-dark-mode-plugin"
 
 # ---- 参数解析 ----

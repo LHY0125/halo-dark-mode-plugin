@@ -3,7 +3,7 @@ plugins {
     id "com.github.node-gradle.node" version "7.1.0"
 }
 
-group 'run.halo.darkmode.ui'
+group 'top.liuhangyv.darkmode.ui'
 
 node {
     // 使用系统安装的 Node.js，避免 Gradle 下载的本地 Node 目录缺失时失败

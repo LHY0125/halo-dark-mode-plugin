@@ -108,7 +108,7 @@ pnpm build        # 生产构建
 ├── gradle/wrapper/           # Gradle Wrapper
 ├── src/
 │   └── main/
-│       ├── java/run/halo/darkmode/
+│       ├── java/top/liuhangyv/darkmode/
 │       │   └── DarkModePlugin.java    # 插件主类（极简骨架）
 │       └── resources/
 │           └── plugin.yaml            # 插件清单

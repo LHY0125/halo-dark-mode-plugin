@@ -1,4 +1,4 @@
-package run.halo.darkmode;
+package top.liuhangyv.darkmode;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -11,7 +11,7 @@ import run.halo.app.plugin.PluginContext;
  * <p>Only one main class extending {@link BasePlugin} is allowed per plugin.</p>
  *
  * @author LHY
- * @since 1.1.1
+ * @since 1.1.2
  */
 @Slf4j
 @Component

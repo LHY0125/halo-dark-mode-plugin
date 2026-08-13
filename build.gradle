@@ -4,7 +4,7 @@ plugins {
     id "run.halo.plugin.devtools" version "0.8.0"
 }
 
-group 'run.halo.darkmode'
+group 'top.liuhangyv.darkmode'
 
 repositories {
     mavenCentral()

@@ -1,4 +1,4 @@
-package run.halo.darkmode;
+package top.liuhangyv.darkmode;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
