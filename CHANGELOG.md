@@ -22,6 +22,18 @@ Halo 深色模式插件（`run.halo.darkmode`）的显著变更记录。版本�
 
 > v1.0.5 之前的版本无独立 Release 记录，历史变更见 [GitHub Releases](https://github.com/LHY0125/halo-dark-mode-plugin/releases)。
 
+## v1.1.1（2026-08-13）
+
+### 调整
+- 设置页主题选项改用 Halo 官方 `VEntity` 单选列表组件，行高更紧凑，与官方后台风格统一
+
+### 行为变化
+- 模式选择由大卡片改为官方列表行：选中项以高亮背景 + 填充圆圈标识，点击整行切换
+
+### 验证
+- 前端 8 项单元测试全部通过，`type-check` / `lint` / `build` 全绿
+- `./gradlew build` 构建成功
+
 ## v1.1.0（2026-08-12）
 
 ### 新增
