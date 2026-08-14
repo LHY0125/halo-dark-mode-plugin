@@ -22,6 +22,22 @@ Halo 深色模式插件（`top.liuhangyv.darkmode`）的显著变更记录。版
 
 > v1.0.5 之前的版本无独立 Release 记录，历史变更见 [GitHub Releases](https://github.com/LHY0125/halo-dark-mode-plugin/releases)。
 
+## v1.1.3（2026-08-14）
+
+### 调整
+- 移除 3 个未使用的生产依赖（`axios`、`canvas-confetti`、`@halo-dev/api-client`），缩小依赖审计面与产物体积
+- 通过 `pnpm-workspace.yaml` overrides 将间接依赖 `glob`（10.4.5 → 10.5.0）与 `nanoid`（3.3.17 → 3.3.18）升级到修复版本，`pnpm audit --audit-level=high` 结果归零
+- Gradle Wrapper 补充 `distributionSha256Sum`（Gradle 9.4.0 官方哈希）并开启 `validateDistributionUrl=true`，防止发行版被篡改
+- CI 发版流程新增依赖安全审计步骤（官方 registry），存在 high 级漏洞时阻止发版
+
+### 验证
+- `pnpm type-check` / `lint` / `test:unit`（8 例）/ `build` 全绿
+- `pnpm audit --audit-level=high --registry=https://registry.npmjs.org/` 输出 0 vulnerabilities
+- `./gradlew build` 成功，JAR 内 Implementation-Version 为 1.1.3
+
+### 说明
+- 功能零变化，仅构建/依赖/供应链加固；覆盖安装即可，原主题偏好保留
+
 ## v1.1.2（2026-08-13）
 
 ### 行为变化
