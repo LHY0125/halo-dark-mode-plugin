@@ -35,7 +35,7 @@ jobs:
       - name: Setup Node 18
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '22'
 
       # gradle.properties 里 org.gradle.java.home 指向本机 Windows JDK，
       # Linux runner 上没有该路径，Gradle 会失败。剔除后走 JAVA_HOME（setup-java）。

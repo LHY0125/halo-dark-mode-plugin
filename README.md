@@ -56,7 +56,7 @@
 
 - Halo `>=2.25.0`
 - Java 21+（项目使用 `--release 21` 编译）
-- Node.js 18+
+- Node.js 20.19+（Vite 8 要求）
 - pnpm
 - Docker（`haloServer` 开发服务器需要）
 
