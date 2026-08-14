@@ -57,6 +57,10 @@ jobs:
             echo "exists=false" >> "$GITHUB_OUTPUT"
           fi
 
+      - name: 依赖安全审计
+        if: steps.check.outputs.exists == 'false'
+        run: cd ui && pnpm audit --audit-level=high --registry=https://registry.npmjs.org/
+
       - name: 构建插件 JAR
         if: steps.check.outputs.exists == 'false'
         run: ./gradlew build

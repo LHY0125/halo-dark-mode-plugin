@@ -10,6 +10,18 @@ node {
     download = false
 }
 
+tasks.named('pnpmInstall') {
+    // Gradle 9.4 对 pnpm 生成的 node_modules 做输出快照时会引用已删除的旧文件并报
+    // NoSuchFileException；关闭状态跟踪，每次构建幂等重跑 pnpm install（耗时数秒）
+    doNotTrackState('pnpm node_modules layout is managed by pnpm')
+}
+
+tasks.named('pnpmSetup') {
+    // Windows 上 node-gradle 通过 npm.cmd 安装 pnpm 在 Gradle 子进程中不可用；
+    // 本地已缓存 pnpm（ui/.gradle/pnpm/pnpm-latest）时跳过安装，CI 全新环境仍正常执行
+    onlyIf { !project.file('.gradle/pnpm/pnpm-latest/pnpm.cmd').exists() }
+}
+
 tasks.register('pnpmBuild', PnpmTask) {
     group = 'build'
     description = 'Build the UI project using pnpm'

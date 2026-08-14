@@ -32,15 +32,15 @@
 
 以下截图展示插件在 Halo 后台的实际效果。
 
-![插件信息界面](docs\screenshots\插件界面1.png)
+![插件信息界面](https://app-store-static.halo.run/static/EE4CAB96-C7FE-4379-B5C6-421BC6F059CE.png)
 
-![插件模式选择界面](docs\screenshots\插件界面2.png)
+![插件模式选择界面](https://app-store-static.halo.run/static/A3B26731-56F1-4081-A02F-F55E74ED6630.png)
 
-![文章写作界面展示](docs\screenshots\文章写作界面展示.png)
+![文章写作界面展示](https://app-store-static.halo.run/static/88EFBAB2-8028-4247-B3AF-AC3F64BEA653.png)
 
-![仪表盘界面展示](docs\screenshots\仪表盘界面展示.png)
+![仪表盘界面展示](https://app-store-static.halo.run/static/50FF6E30-A717-42AE-A5B9-81890CB4D2FD.png)
 
-![主题界面展示](docs\screenshots\主题界面展示.png)
+![主题界面展示](https://app-store-static.halo.run/static/DE5B9E16-3AB1-4E9B-B031-8A327DC5E3CB.png)
 
 ## 技术原理
 
