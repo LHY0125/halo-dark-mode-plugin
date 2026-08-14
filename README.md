@@ -12,12 +12,6 @@
 - **设置页面**：在「外观 → 深色模式」中详细选择显示模式
 - **零后端依赖**：纯前端实现，不需要额外后端 API
 
-## 安装
-
-1. 从 Releases 下载 `plugin-dark-mode-<version>.jar`。
-2. 在 Halo 后台的「插件管理」中上传并安装。
-3. 启用插件后，进入「外观 → 深色模式」设置页面调整主题。
-
 ## 使用
 
 安装并启用后，进入「外观 → 深色模式」设置页面选择显示模式：
@@ -140,10 +134,19 @@ pnpm build        # 生产构建
 
 运行时验证脚本位于 `scripts/verify-toggle.py`，用于直接驱动主题状态，并检查 data-halo-theme、localStorage、Dark Reader 注入与 color-scheme 的翻转。
 
+## 应用市场
+
+- 插件页：https://www.halo.run/store/apps/app-cpno4kjh
+- 发布者页：https://www.halo.run/store/publishers/lhy0125
+
 ## 更新日志
 
-各版本详细变更见 [CHANGELOG.md](./CHANGELOG.md)。
+各版本详细变更见 [CHANGELOG.md](https://github.com/LHY0125/halo-dark-mode-plugin/blob/main/CHANGELOG.md)。
+
+## 联系
+
+遇到问题或想反馈建议，欢迎通过 [GitHub Issues](https://github.com/LHY0125/halo-dark-mode-plugin/issues) 提交，或直接发邮件至 [3364451258@qq.com](mailto:3364451258@qq.com)。
 
 ## 许可证
 
-[GPL-3.0](./LICENSE) © LHY
+[GPL-3.0](https://github.com/LHY0125/halo-dark-mode-plugin/blob/main/LICENSE) © LHY
