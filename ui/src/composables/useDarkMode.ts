@@ -67,11 +67,11 @@ window.addEventListener('storage', (event) => {
   }
 })
 
-// 监听系统偏好变化 → 仅在 'auto' 模式下响应
-onChange((systemDark) => {
-  if (theme.value === 'auto') {
-    applyHtmlAttribute(systemDark)
-  }
+// 监听系统偏好变化 → 订阅 addEventListener 以保持 isSystemDark 实时更新。
+// isDark 为 computed，系统偏好变化时 watch(isDark) 已触发 applyHtmlAttribute，
+// 此处无需（也不应）再次手动 apply，避免重复操作。
+onChange(() => {
+  // isSystemDark 已在 useSystemPreference 内部更新；此回调仅为保持监听而保留。
 })
 
 /**
