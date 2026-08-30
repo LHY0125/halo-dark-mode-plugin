@@ -22,6 +22,22 @@ Halo 深色模式插件（`top.liuhangyv.darkmode`）的显著变更记录。版
 
 > v1.0.5 之前的版本无独立 Release 记录，历史变更见 [GitHub Releases](https://github.com/LHY0125/halo-dark-mode-plugin/releases)。
 
+## v1.1.4（2026-08-30）
+
+### 调整
+- 移除插件对 Halo 官方设计 token（`--halo-*`）的全局覆盖，后台所有页面（官方页 + 第三方插件页）配色回归官方默认，不再被自定义绿色系主色污染
+- README 补充 Dark Reader vendored 依赖溯源：说明 `4.9.129` 与官方 `4.9.128` 的差异、构建所需文件清单，以及 `SHA256SUMS` 的生成与校验命令
+- 消除 Gradle 脚本中 `group '...'` 空格赋值语法的弃用（改用 `group = '...'`），并记录 `run.halo.plugin.devtools` 的 `generatePluginComponentsIdx` 已知弃用限制
+
+### 清理
+- 移除未被引用的前端资产 `ui/src/assets/logo.svg`（插件图标实际使用 `src/main/resources/logo.png`）
+- 移除 0 字节的空文件 `workplace/roleTemplates.yaml`
+- 移除 `useDarkMode` 中系统偏好变化时的冗余 DOM 应用逻辑（行为不变）
+
+### 验证
+- `pnpm type-check` / `lint` / `test:unit`（3 份测试文件、17 例）/ `build` 全绿
+- `./gradlew build` 成功，产物 `plugin-dark-mode-1.1.4.jar` 内含更新后的 `ui/main.js`、`ui/style.css` 与 `logo.png`
+
 ## v1.1.3（2026-08-14）
 
 ### 调整
