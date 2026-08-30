@@ -4,7 +4,7 @@ plugins {
     id "run.halo.plugin.devtools" version "0.8.0"
 }
 
-group 'top.liuhangyv.darkmode'
+group = 'top.liuhangyv.darkmode'
 
 repositories {
     mavenCentral()
@@ -39,6 +39,9 @@ tasks.named('classes') {
     dependsOn tasks.named('processUiResources')
 }
 
+// 已知限制：run.halo.plugin.devtools 插件在 generatePluginComponentsIdx 内于执行期调用
+// "Task.project"，Gradle 9 对其弃用、Gradle 10 将报错。该调用来自第三方构建插件内部，
+// 无法在项目脚本内消除，故仅关闭配置缓存以规避当前构建失败，未来升级 devtools 后再处理。
 tasks.named('generatePluginComponentsIdx') {
     notCompatibleWithConfigurationCache('This task invokes "Task.project" at execution time, which is not supported with configuration cache.')
 }
@@ -46,4 +49,3 @@ tasks.named('generatePluginComponentsIdx') {
 halo {
     version = '2.25'
 }
-
