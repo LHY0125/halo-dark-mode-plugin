@@ -1,19 +1,11 @@
 /* ============================================================
-   Halo Dark Mode — CSS Variables
-   配色策略: OKLCH 颜色空间 | 中性色微蓝着色调 | 亮度层次替代阴影
+   Halo Dark Mode — 插件自身样式
+   ============================================================
+
+   页面的暗色转换完全交由 Dark Reader 引擎处理，插件自身不再维护全局颜色变量。
+   Halo 官方设计 token（--halo-*）由 Halo 控制台自行提供，插件不覆盖、不污染
+   官方命名空间，以保证后台所有页面（官方页 + 第三方插件页）的颜色风格统一。
+
+   说明：data-halo-theme 为兼容性遗留标记，当前已无 CSS 消费方，仅保留给外部脚本
+   与验证工具（scripts/verify-toggle.py）使用。
    ============================================================ */
-
-/* 说明：data-halo-theme 为兼容性遗留标记，当前已无 CSS 消费方，保留给外部脚本与验证工具。 */
-/* ===== 浅色模式（Halo 默认，此处定义为显式回退） ===== */
-:root {
-  --halo-text-primary: oklch(20% 0.01 250);
-  --halo-text-tertiary: oklch(60% 0.01 250);
-
-  --halo-bg-hover: oklch(95% 0.01 250);
-
-  --halo-border-base: oklch(88% 0.01 250);
-
-  --halo-accent-primary: oklch(55% 0.14 160);
-
-  --halo-menu-item-active: oklch(88% 0.03 160);
-}
