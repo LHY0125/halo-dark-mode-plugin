@@ -49,8 +49,25 @@
 
 - [Dark Reader](https://github.com/darkreader/darkreader) `4.9.129`，[MIT License](https://github.com/darkreader/darkreader/blob/main/LICENSE)。
 - 构建所需文件位于 `third-party/darkreader/`，由 `ui/package.json` 通过本地文件依赖引用。
-- 升级或替换 Dark Reader 构建文件后，请校验 `third-party/darkreader/SHA256SUMS`：
-  Linux / macOS 使用 `sha256sum -c SHA256SUMS`，Windows 使用 `Get-FileHash -Algorithm SHA256` 对比。
+
+### vendored 依赖溯源
+
+- `third-party/darkreader/` 取自 Dark Reader 开源仓库源码构建，版本标记为 `4.9.129`；官方 npm 最新发布版本为 `4.9.128`。
+- 本仓库 bundler（`darkreader.js` / `darkreader.mjs`）与官方 `4.9.128` 存在差异（体积与内容不同），属源码在官方 `4.9.128` 之后的一版构建；类型声明 `index.d.ts` 与官方一致，许可证同为 MIT。
+- 为保障供应链可复现，git 仅跟踪构建所需文件，并以 `third-party/darkreader/SHA256SUMS` 作为完整性锚点。
+
+### SHA256SUMS 生成与校验
+
+- 校验（核对某文件是否与记录一致）：
+  - Linux / macOS：`cd third-party/darkreader && sha256sum -c SHA256SUMS`
+  - Windows：`Get-FileHash darkreader.js -Algorithm SHA256`，与 `SHA256SUMS` 中对应条目比对
+- 重新生成（替换构建产物后必须更新）：
+  - Linux / macOS：`cd third-party/darkreader && sha256sum darkreader.js darkreader.mjs package.json index.d.ts LICENSE > SHA256SUMS`
+  - Windows：对 `darkreader.js / darkreader.mjs / package.json / index.d.ts / LICENSE` 分别执行 `Get-FileHash -Algorithm SHA256`，按 `SHA256SUMS` 的行格式（`<hash>  <文件名>`）写回
+
+### 升级 / 替换
+
+从 Dark Reader 官方构建产物或 npm tarball 重新生成上述 6 个文件后，务必重新生成 `SHA256SUMS`；`ui/package.json` 中的本地依赖路径无需改动。
 
 ## 开发环境
 
