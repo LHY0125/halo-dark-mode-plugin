@@ -22,6 +22,35 @@ Halo 深色模式插件（`top.liuhangyv.darkmode`）的显著变更记录。版
 
 > v1.0.5 之前的版本无独立 Release 记录，历史变更见 [GitHub Releases](https://github.com/LHY0125/halo-dark-mode-plugin/releases)。
 
+## v1.1.6（2026-08-31）
+
+### 新增
+- 设置页新增「编辑页 Dark Reader」选项，二选一：
+  - **完全使用 Dark Reader**：文章 / 页面编辑页也保持深色，适合使用 Markdown 等不受崩溃影响的编辑器
+  - **在文章编辑页面禁用 Dark Reader**：编辑页强制白天，避免富文本编辑器与 Dark Reader 动态分析互相触发导致的卡死（默认）
+
+### 调整
+- 编辑页是否禁用 Dark Reader 由上述设置决定，不再一刀切全部禁用；策略持久化到 `localStorage`（`halo-dark-mode-editor`）并在多标签页间同步
+
+### 验证
+- 前端单元测试通过（新增编辑页策略相关用例）
+- `./gradlew build` 成功，产物 `plugin-dark-mode-1.1.6.jar`
+
+
+## v1.1.5（2026-08-31）
+
+### 修复
+- 解决文章 / 页面编辑页深色模式下卡死的问题：在编辑页彻底禁用 Dark Reader 引擎，切断 contenteditable（如 ByteMD / 富文本）与引擎动态分析之间的相互触发
+
+### 行为变化
+- 编辑页识别采用「路由 + 编辑区 DOM」双重判断：只要 URL 以 `/editor` 结尾，或页面出现 `.ProseMirror` / `.editor-content` / `[contenteditable]` / `.editor` 任一编辑区节点，即执行 `disable()`，并强制 `color-scheme: light`
+- 编辑页整页转为白天模式：无论全局主题是深色还是浅色，进入编辑页时左侧导航、工具栏、正文均显示为 Halo 默认浅色；退出编辑页后自动恢复全局主题
+- 通过劫持 `history.pushState` / `history.replaceState`、监听 `popstate`、`MutationObserver` 与兜底轮询，在进出编辑页时即时重应用 DR，无需整页刷新
+
+### 验证
+- 前端单元测试通过（含“编辑页 URL 命中强制禁用”“编辑区 DOM 出现强制禁用”“离开编辑页恢复”用例）
+- `./gradlew build` 成功，产物 `plugin-dark-mode-1.1.5.jar`
+
 ## v1.1.4（2026-08-30）
 
 ### 调整

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { ThemeMode } from '../composables/useDarkMode'
+import type { EditorPolicy, ThemeMode } from '../composables/useDarkMode'
 import { useDarkMode } from '../composables/useDarkMode'
 import {
   IconCheckboxCircle,
@@ -16,7 +16,7 @@ import {
 } from '@halo-dev/components'
 import { computed } from 'vue'
 
-const { theme, isDark, setTheme } = useDarkMode()
+const { theme, isDark, setTheme, editorPolicy, setEditorPolicy } = useDarkMode()
 
 const currentEffectiveMode = computed(() => {
   if (theme.value === 'auto') {
@@ -29,6 +29,11 @@ const modeOptions: { value: ThemeMode; label: string; description: string }[] = 
   { value: 'light', label: '浅色', description: '始终使用浅色模式' },
   { value: 'dark', label: '深色', description: '始终使用深色模式' },
   { value: 'auto', label: '跟随系统', description: '根据系统设置自动切换' },
+]
+
+const editorOptions: { value: EditorPolicy; label: string; description: string }[] = [
+  { value: 'darkreader', label: '完全使用 Dark Reader', description: '编辑页也保持深色（适合 Markdown 等编辑器）' },
+  { value: 'disable', label: '在文章编辑页面禁用 Dark Reader', description: '编辑页强制白天，避免富文本编辑器卡死' },
 ]
 </script>
 
@@ -62,6 +67,36 @@ const modeOptions: { value: ThemeMode; label: string; description: string }[] = 
                 :is="theme === option.value ? IconCheckboxFill : IconCheckboxCircle"
                 class="dark-mode-settings__radio"
                 :class="{ 'is-checked': theme === option.value }"
+              />
+            </template>
+            <template #start>
+              <VEntityField :title="option.label" :description="option.description" />
+            </template>
+          </VEntity>
+        </VEntityContainer>
+      </VCard>
+
+      <VCard :body-class="['!p-0']" class="mt-4">
+        <div class="p-4">
+          <VDescription>
+            <VDescriptionItem label="编辑页 Dark Reader">
+              <VTag>{{ editorPolicy === 'darkreader' ? '完全使用' : '编辑页禁用' }}</VTag>
+            </VDescriptionItem>
+          </VDescription>
+        </div>
+
+        <VEntityContainer>
+          <VEntity
+            v-for="option in editorOptions"
+            :key="option.value"
+            :is-selected="editorPolicy === option.value"
+            @click="setEditorPolicy(option.value)"
+          >
+            <template #prepend>
+              <component
+                :is="editorPolicy === option.value ? IconCheckboxFill : IconCheckboxCircle"
+                class="dark-mode-settings__radio"
+                :class="{ 'is-checked': editorPolicy === option.value }"
               />
             </template>
             <template #start>

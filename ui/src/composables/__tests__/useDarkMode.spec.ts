@@ -103,4 +103,46 @@ describe('useDarkMode', () => {
     )
     expect(theme.value).toBe('light')
   })
+
+  it('默认编辑页策略为 disable（编辑页禁用）', () => {
+    const { editorPolicy } = useDarkMode()
+    expect(editorPolicy.value).toBe('disable')
+  })
+
+  it('setEditorPolicy 会持久化到 localStorage', async () => {
+    const { setEditorPolicy } = useDarkMode()
+    setEditorPolicy('darkreader')
+    await nextTick()
+    expect(localStorage.getItem('halo-dark-mode-editor')).toBe('darkreader')
+  })
+
+  it('storage 事件同步其他标签页的编辑页策略', async () => {
+    const { editorPolicy, setEditorPolicy } = useDarkMode()
+    setEditorPolicy('darkreader')
+    await nextTick()
+    expect(localStorage.getItem('halo-dark-mode-editor')).toBe('darkreader')
+    window.dispatchEvent(
+      new StorageEvent('storage', {
+        key: 'halo-dark-mode-editor',
+        newValue: 'disable',
+      }),
+    )
+    await nextTick()
+    expect(editorPolicy.value).toBe('disable')
+    expect(localStorage.getItem('halo-dark-mode-editor')).toBe('disable')
+  })
+
+  it('storage 事件忽略非法编辑页策略值', async () => {
+    const { setEditorPolicy } = useDarkMode()
+    setEditorPolicy('darkreader')
+    await nextTick()
+    window.dispatchEvent(
+      new StorageEvent('storage', {
+        key: 'halo-dark-mode-editor',
+        newValue: 'invalid',
+      }),
+    )
+    await nextTick()
+    expect(localStorage.getItem('halo-dark-mode-editor')).toBe('darkreader')
+  })
 })

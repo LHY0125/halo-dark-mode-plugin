@@ -3,6 +3,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { computed, ref, type ComputedRef, type Ref } from 'vue'
 
 type ThemeMode = 'light' | 'dark' | 'auto'
+type EditorPolicy = 'darkreader' | 'disable'
 
 vi.mock('@halo-dev/components', async () => {
   const { defineComponent, h } = await import('vue')
@@ -64,7 +65,9 @@ vi.mock('@halo-dev/components', async () => {
 
 describe('SettingsView', () => {
   let themeRef: Ref<ThemeMode>
+  let editorPolicyRef: Ref<EditorPolicy>
   let setThemeSpy: ReturnType<typeof vi.fn>
+  let setEditorPolicySpy: ReturnType<typeof vi.fn>
   let wrapper: ReturnType<typeof mount>
 
   async function setup(initial: ThemeMode, useSystemDark = false): Promise<void> {
@@ -73,11 +76,21 @@ describe('SettingsView', () => {
     setThemeSpy = vi.fn((t: ThemeMode) => {
       themeRef.value = t
     })
+    editorPolicyRef = ref<EditorPolicy>('disable')
+    setEditorPolicySpy = vi.fn((p: EditorPolicy) => {
+      editorPolicyRef.value = p
+    })
     const isDark: ComputedRef<boolean> = computed(
       () => themeRef.value === 'dark' || (themeRef.value === 'auto' && useSystemDark),
     )
     vi.doMock('../../composables/useDarkMode', () => ({
-      useDarkMode: () => ({ theme: themeRef, isDark, setTheme: setThemeSpy }),
+      useDarkMode: () => ({
+        theme: themeRef,
+        isDark,
+        setTheme: setThemeSpy,
+        editorPolicy: editorPolicyRef,
+        setEditorPolicy: setEditorPolicySpy,
+      }),
     }))
     const mod = await import('../SettingsView.vue')
     wrapper = mount(mod.default)
@@ -98,8 +111,9 @@ describe('SettingsView', () => {
   })
 
   it('选中项渲染选中图标，其余为未选中图标', () => {
-    expect(wrapper.findAll('[data-testid="icon-checkbox-fill"]')).toHaveLength(1)
-    expect(wrapper.findAll('[data-testid="icon-checkbox-circle"]')).toHaveLength(2)
+    // 两组卡片各有一个选中项：主题组 + 编辑页策略组
+    expect(wrapper.findAll('[data-testid="icon-checkbox-fill"]')).toHaveLength(2)
+    expect(wrapper.findAll('[data-testid="icon-checkbox-circle"]')).toHaveLength(3)
   })
 
   it('auto 且系统为深色时标签显示「深色（跟随系统）」', async () => {
@@ -115,5 +129,20 @@ describe('SettingsView', () => {
     expect(setThemeSpy).toHaveBeenCalledWith('light')
     expect(themeRef.value).toBe('light')
     expect(wrapper.find('[data-testid="v-tag"]').text()).toBe('浅色')
+  })
+
+  it('渲染编辑页 Dark Reader 两个选项', () => {
+    expect(wrapper.text()).toContain('完全使用 Dark Reader')
+    expect(wrapper.text()).toContain('在文章编辑页面禁用 Dark Reader')
+  })
+
+  it('点击「完全使用 Dark Reader」调用 setEditorPolicy', async () => {
+    const entity = wrapper
+      .findAll('[data-testid="v-entity"]')
+      .find((node) => node.text().includes('完全使用 Dark Reader'))
+    expect(entity).toBeDefined()
+    await entity!.trigger('click')
+    expect(setEditorPolicySpy).toHaveBeenCalledWith('darkreader')
+    expect(editorPolicyRef.value).toBe('darkreader')
   })
 })
