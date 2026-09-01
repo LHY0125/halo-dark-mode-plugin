@@ -1,4 +1,4 @@
-"""验证主题切换：直接驱动 localStorage，检查 data-halo-theme、Dark Reader 与 color-scheme 翻转。"""
+"""验证主题切换：覆盖普通页和编辑页 Dark Reader 策略。"""
 import argparse
 import pathlib
 import sys
@@ -9,14 +9,17 @@ from playwright.sync_api import sync_playwright
 DEFAULT_PROFILE = pathlib.Path(__file__).parent / ".browser-profile"
 BASE = "https://blog.liuhangyv.top"
 STORAGE_KEY = "halo-dark-mode-theme"
+EDITOR_KEY = "halo-dark-mode-editor"
 
 
 def read_state(page) -> dict:
     return page.evaluate(
         """() => ({
             attr: document.documentElement.getAttribute('data-halo-theme'),
+            editorPolicy: document.documentElement.getAttribute('data-halo-editor-policy'),
             darkreader: document.documentElement.getAttribute('data-darkreader-mode'),
             stored: localStorage.getItem('halo-dark-mode-theme'),
+            editorStored: localStorage.getItem('halo-dark-mode-editor'),
             colorScheme: document.documentElement.style.colorScheme,
         })"""
     )
@@ -32,6 +35,19 @@ def set_mode(page, mode: str) -> None:
             )
         }""",
         [STORAGE_KEY, mode],
+    )
+
+
+def set_editor_policy(page, policy: str) -> None:
+    """写入编辑页策略并派发 storage 事件，让当前页面即时响应。"""
+    page.evaluate(
+        """([key, policy]) => {
+            localStorage.setItem(key, policy)
+            window.dispatchEvent(
+                new StorageEvent('storage', { key: key, newValue: policy })
+            )
+        }""",
+        [EDITOR_KEY, policy],
     )
 
 
@@ -51,10 +67,38 @@ def wait_mode(page, expect_dark: bool) -> None:
     )
 
 
+def wait_editor_state(page, policy: str, expect_darkreader: bool) -> None:
+    page.wait_for_function(
+        """([policy, expectDarkReader]) => {
+            const root = document.documentElement
+            const actualPolicy = root.getAttribute('data-halo-editor-policy')
+            const darkreader = root.getAttribute('data-darkreader-mode')
+            const scheme = root.style.colorScheme
+            if (actualPolicy !== policy) return false
+            if (expectDarkReader) {
+                return darkreader === 'dynamic' && scheme === 'dark'
+            }
+            return darkreader === null && scheme === 'light'
+        }""",
+        arg=[policy, expect_darkreader],
+        timeout=15000,
+    )
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="验证主题切换运行时行为")
     parser.add_argument("--base", default=BASE)
     parser.add_argument("--profile", default=str(DEFAULT_PROFILE))
+    parser.add_argument(
+        "--editor-url",
+        default="/console/posts/editor",
+        help="编辑页路径；若页面需要资源名称，可传入完整路径和查询参数",
+    )
+    parser.add_argument(
+        "--skip-editor",
+        action="store_true",
+        help="只验证普通 Dashboard，不执行编辑页策略场景",
+    )
     args = parser.parse_args()
 
     with sync_playwright() as p:
@@ -114,6 +158,59 @@ def main() -> int:
             f"color-scheme 翻转: {'PASS' if scheme_flipped else 'FAIL'}"
         )
 
+        editor_checks = []
+        if not args.skip_editor:
+            set_mode(page, "dark")
+            wait_mode(page, expect_dark=True)
+
+            set_editor_policy(page, "disable")
+            page.goto(args.base + args.editor_url, wait_until="domcontentloaded")
+            try:
+                page.wait_for_load_state("networkidle", timeout=10000)
+            except Exception:
+                pass
+            wait_editor_state(page, policy="disable", expect_darkreader=False)
+            disabled_state = read_state(page)
+            disable_pass = (
+                disabled_state["editorPolicy"] == "disable"
+                and disabled_state["editorStored"] == "disable"
+                and disabled_state["darkreader"] is None
+                and disabled_state["colorScheme"] == "light"
+            )
+            print(f"编辑页 disable 策略: {'PASS' if disable_pass else 'FAIL'} {disabled_state}")
+            editor_checks.append(disable_pass)
+
+            set_editor_policy(page, "darkreader")
+            wait_editor_state(page, policy="darkreader", expect_darkreader=True)
+            darkreader_state = read_state(page)
+            darkreader_pass = (
+                darkreader_state["editorPolicy"] == "darkreader"
+                and darkreader_state["editorStored"] == "darkreader"
+                and darkreader_state["darkreader"] == "dynamic"
+                and darkreader_state["colorScheme"] == "dark"
+            )
+            print(f"编辑页 darkreader 策略: {'PASS' if darkreader_pass else 'FAIL'} {darkreader_state}")
+            editor_checks.append(darkreader_pass)
+
+            set_editor_policy(page, "disable")
+            page.goto(args.base + "/console/dashboard", wait_until="domcontentloaded")
+            try:
+                page.wait_for_load_state("networkidle", timeout=10000)
+            except Exception:
+                pass
+            wait_mode(page, expect_dark=True)
+            restored_state = read_state(page)
+            restored_pass = (
+                restored_state["editorPolicy"] == "disable"
+                and restored_state["editorStored"] == "disable"
+                and restored_state["darkreader"] == "dynamic"
+                and restored_state["colorScheme"] == "dark"
+            )
+            print(f"离开编辑页恢复普通页: {'PASS' if restored_pass else 'FAIL'} {restored_state}")
+            editor_checks.append(restored_pass)
+
+        editor_pass = all(editor_checks) if editor_checks else True
+
         ctx.close()
         return (
             0
@@ -122,6 +219,7 @@ def main() -> int:
             and stored_flipped
             and darkreader_flipped
             and scheme_flipped
+            and editor_pass
             else 1
         )
 

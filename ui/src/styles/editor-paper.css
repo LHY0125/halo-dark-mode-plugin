@@ -1,31 +1,28 @@
 /* ============================================================
    Halo Dark Mode — 文章/页面编辑内容区「浅色纸面」
 
-   背景：发布内容时，Dark Reader 会把编辑内容区整体反转成深色
-   （黑底浅字）。但编辑区承载的是用户要写作的「纸面」，深色背景
-   会与写作体验冲突。此处用高特异性规则把编辑内容区强制回
-   「黑字白底」，而左侧导航栏、工具栏等后台其余部分仍交由
-   Dark Reader 保持深色，不受影响。
+   背景：编辑页策略选择「禁用 Dark Reader」时，编辑区使用白纸，
+   而左侧导航栏、工具栏等后台其余部分仍按全局主题处理。选择
+   「编辑页也使用 Dark Reader」时，本文件不介入编辑区，避免覆盖 DR。
 
-   说明：Dark Reader 会用 !important 覆盖元素颜色，因此这里
-   必须以 html[data-halo-theme="dark"] 前缀拔高特异性并加
-   !important，才能压过引擎注入的样式表规则。
+   说明：白纸规则只匹配全局深色 + 编辑页禁用策略两个 HTML 状态，
+   由 useDarkMode 统一写入 data-halo-theme 和 data-halo-editor-policy。
    ============================================================ */
 
 /* 编辑内容区容器：白底、黑字、深色光标 */
-html[data-halo-theme="dark"] .editor-content,
-html[data-halo-theme="dark"] [contenteditable="true"],
-html[data-halo-theme="dark"] .ProseMirror {
+html[data-halo-theme="dark"][data-halo-editor-policy="disable"] .editor-content,
+html[data-halo-theme="dark"][data-halo-editor-policy="disable"] [contenteditable="true"],
+html[data-halo-theme="dark"][data-halo-editor-policy="disable"] .ProseMirror {
   background-color: #ffffff !important;
   color: #1f2328 !important;
   caret-color: #1f2328 !important;
 }
 
 /* 内容区正文文字 → 黑字，背景透明以透出白色纸面 */
-html[data-halo-theme="dark"] .editor-content :is(
+html[data-halo-theme="dark"][data-halo-editor-policy="disable"] .editor-content :is(
     p, li, h1, h2, h3, h4, h5, h6, span, a, strong, em, del,
     blockquote, td, th, label, small, figcaption),
-html[data-halo-theme="dark"] .ProseMirror :is(
+html[data-halo-theme="dark"][data-halo-editor-policy="disable"] .ProseMirror :is(
     p, li, h1, h2, h3, h4, h5, h6, span, a, strong, em, del,
     blockquote, td, th, label, small, figcaption) {
   color: #1f2328 !important;
@@ -33,35 +30,35 @@ html[data-halo-theme="dark"] .ProseMirror :is(
 }
 
 /* 代码块：浅灰底 + 深字，避免「白底白字」不可读 */
-html[data-halo-theme="dark"] .editor-content pre,
-html[data-halo-theme="dark"] .editor-content pre code,
-html[data-halo-theme="dark"] .ProseMirror pre,
-html[data-halo-theme="dark"] .ProseMirror pre code {
+html[data-halo-theme="dark"][data-halo-editor-policy="disable"] .editor-content pre,
+html[data-halo-theme="dark"][data-halo-editor-policy="disable"] .editor-content pre code,
+html[data-halo-theme="dark"][data-halo-editor-policy="disable"] .ProseMirror pre,
+html[data-halo-theme="dark"][data-halo-editor-policy="disable"] .ProseMirror pre code {
   background-color: #f6f8fa !important;
   color: #1f2328 !important;
 }
 
 /* 代码块内的语法高亮片段统一压暗，保证在浅色纸面上可读 */
-html[data-halo-theme="dark"] .editor-content pre :is(span, code),
-html[data-halo-theme="dark"] .ProseMirror pre :is(span, code) {
+html[data-halo-theme="dark"][data-halo-editor-policy="disable"] .editor-content pre :is(span, code),
+html[data-halo-theme="dark"][data-halo-editor-policy="disable"] .ProseMirror pre :is(span, code) {
   color: #1f2328 !important;
 }
 
 /* 空内容占位符 / 引用块：在白色纸面上用中性灰，避免过浅 */
-html[data-halo-theme="dark"] .ProseMirror [data-placeholder]::before,
-html[data-halo-theme="dark"] .ProseMirror .is-editor-empty:first-child::before,
-html[data-halo-theme="dark"] .editor-content [data-placeholder]::before {
+html[data-halo-theme="dark"][data-halo-editor-policy="disable"] .ProseMirror [data-placeholder]::before,
+html[data-halo-theme="dark"][data-halo-editor-policy="disable"] .ProseMirror .is-editor-empty:first-child::before,
+html[data-halo-theme="dark"][data-halo-editor-policy="disable"] .editor-content [data-placeholder]::before {
   color: #9aa0a6 !important;
 }
 
 /* 表格边框与分隔线：在白色纸面上重新描边，避免散架 */
-html[data-halo-theme="dark"] .editor-content table,
-html[data-halo-theme="dark"] .editor-content table th,
-html[data-halo-theme="dark"] .editor-content table td,
-html[data-halo-theme="dark"] .editor-content hr,
-html[data-halo-theme="dark"] .ProseMirror table,
-html[data-halo-theme="dark"] .ProseMirror table th,
-html[data-halo-theme="dark"] .ProseMirror table td,
-html[data-halo-theme="dark"] .ProseMirror hr {
+html[data-halo-theme="dark"][data-halo-editor-policy="disable"] .editor-content table,
+html[data-halo-theme="dark"][data-halo-editor-policy="disable"] .editor-content table th,
+html[data-halo-theme="dark"][data-halo-editor-policy="disable"] .editor-content table td,
+html[data-halo-theme="dark"][data-halo-editor-policy="disable"] .editor-content hr,
+html[data-halo-theme="dark"][data-halo-editor-policy="disable"] .ProseMirror table,
+html[data-halo-theme="dark"][data-halo-editor-policy="disable"] .ProseMirror table th,
+html[data-halo-theme="dark"][data-halo-editor-policy="disable"] .ProseMirror table td,
+html[data-halo-theme="dark"][data-halo-editor-policy="disable"] .ProseMirror hr {
   border-color: #d7dbe0 !important;
 }

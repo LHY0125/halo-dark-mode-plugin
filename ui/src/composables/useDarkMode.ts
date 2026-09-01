@@ -33,7 +33,7 @@ function persistTheme(theme: ThemeMode): void {
 /**
  * 从 localStorage 读取编辑页策略；非法值回退到默认「编辑页禁用」。
  * 默认禁用是为了避免富文本（ProseMirror/TipTap）编辑器与 DR 动态模式互相触发导致卡死；
- * 使用 Markdown 等不受影响的编辑器的用户可切换为「完全使用 Dark Reader」。
+ * 使用 Markdown 等不受影响的编辑器的用户可切换为「编辑页也使用 Dark Reader」。
  */
 function loadEditorPolicy(): EditorPolicy {
   try {
@@ -57,19 +57,19 @@ function persistEditorPolicy(policy: EditorPolicy): void {
 }
 
 /**
- * 将主题状态同步到 <html>。
- * data-halo-theme 为兼容性遗留标记，当前已无 CSS 消费方，保留给外部脚本与验证工具；
- * color-scheme 用于在 Dark Reader 异步注入前同步浏览器控件外观，缓解 FOUC。
- * 注意：编辑页的 color-scheme 覆盖由 darkreader-engine 的 sync 负责兜底。
+ * 将全局主题和编辑页策略同步到 <html>。
+ * data-halo-theme 表示全局主题，data-halo-editor-policy 表示编辑页策略；
+ * 两个信号分开维护，编辑页白纸 CSS 可以据此精确限定作用范围。
+ * color-scheme 由 darkreader-engine 统一管理，因为它需要同时知道当前路由。
  */
-function applyHtmlAttribute(isDark: boolean): void {
+function applyHtmlAttributes(isDark: boolean, policy: EditorPolicy): void {
   const root = document.documentElement
   if (isDark) {
     root.setAttribute('data-halo-theme', 'dark')
   } else {
     root.removeAttribute('data-halo-theme')
   }
-  root.style.colorScheme = isDark ? 'dark' : 'light'
+  root.setAttribute('data-halo-editor-policy', policy)
 }
 
 // 模块级单例 — 所有组件共享同一个状态
@@ -86,8 +86,10 @@ const isDark = computed<boolean>(() => {
 // 编辑页 DR 策略（模块级单例）
 const editorPolicy = ref<EditorPolicy>(loadEditorPolicy())
 
-// 监听 isDark 变化 → 同步到 DOM
-watch(isDark, (dark) => applyHtmlAttribute(dark), { immediate: true })
+// 监听全局主题和编辑页策略变化 → 同步到 DOM
+watch([isDark, editorPolicy], ([dark, policy]) => applyHtmlAttributes(dark, policy), {
+  immediate: true,
+})
 
 // 监听 theme / editorPolicy 变化 → 持久化
 watch(theme, (t) => persistTheme(t))
@@ -109,7 +111,7 @@ window.addEventListener('storage', (event) => {
 })
 
 // 监听系统偏好变化 → 订阅 addEventListener 以保持 isSystemDark 实时更新。
-// isDark 为 computed，系统偏好变化时 watch(isDark) 已触发 applyHtmlAttribute，
+// isDark 为 computed，系统偏好变化时 watch(isDark) 已触发 applyHtmlAttributes，
 // 此处无需（也不应）再次手动 apply，避免重复操作。
 onChange(() => {
   // isSystemDark 已在 useSystemPreference 内部更新；此回调仅为保持监听而保留。

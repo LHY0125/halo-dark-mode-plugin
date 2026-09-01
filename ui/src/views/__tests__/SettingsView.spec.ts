@@ -57,8 +57,6 @@ vi.mock('@halo-dev/components', async () => {
         return () => h('div', { 'data-testid': 'v-entity-field' }, [props.title, props.description])
       },
     }),
-    IconCheckboxFill: simple('icon-checkbox-fill'),
-    IconCheckboxCircle: simple('icon-checkbox-circle'),
     IconPalette: simple('icon-palette'),
   }
 })
@@ -110,10 +108,10 @@ describe('SettingsView', () => {
     expect(wrapper.find('[data-testid="v-tag"]').text()).toBe('深色')
   })
 
-  it('选中项渲染选中图标，其余为未选中图标', () => {
+  it('选中项渲染选中态，其余为未选中态', () => {
     // 两组卡片各有一个选中项：主题组 + 编辑页策略组
-    expect(wrapper.findAll('[data-testid="icon-checkbox-fill"]')).toHaveLength(2)
-    expect(wrapper.findAll('[data-testid="icon-checkbox-circle"]')).toHaveLength(3)
+    expect(wrapper.findAll('.dm-radio.is-checked')).toHaveLength(2)
+    expect(wrapper.findAll('.dm-radio:not(.is-checked)')).toHaveLength(3)
   })
 
   it('auto 且系统为深色时标签显示「深色（跟随系统）」', async () => {
@@ -132,14 +130,14 @@ describe('SettingsView', () => {
   })
 
   it('渲染编辑页 Dark Reader 两个选项', () => {
-    expect(wrapper.text()).toContain('完全使用 Dark Reader')
-    expect(wrapper.text()).toContain('在文章编辑页面禁用 Dark Reader')
+    expect(wrapper.text()).toContain('编辑页也使用 Dark Reader')
+    expect(wrapper.text()).toContain('编辑页使用浅色纸面')
   })
 
-  it('点击「完全使用 Dark Reader」调用 setEditorPolicy', async () => {
+  it('点击「编辑页也使用 Dark Reader」调用 setEditorPolicy', async () => {
     const entity = wrapper
       .findAll('[data-testid="v-entity"]')
-      .find((node) => node.text().includes('完全使用 Dark Reader'))
+      .find((node) => node.text().includes('编辑页也使用 Dark Reader'))
     expect(entity).toBeDefined()
     await entity!.trigger('click')
     expect(setEditorPolicySpy).toHaveBeenCalledWith('darkreader')

@@ -70,22 +70,22 @@ describe('initDarkReaderEngine', () => {
     expect(mocks.enable).toHaveBeenCalledTimes(1)
   })
 
-  it('深色时向 enable 传入含 ignoreInlineStyle 的站点修复（覆盖编辑器与代码块）', async () => {
+  it('普通页面深色时传入代码块保护修复项', async () => {
     await load(true)
     engine.initDarkReaderEngine()
     await nextTick()
+    expect(mocks.enable).toHaveBeenCalledTimes(1)
     const fixes = mocks.enable.mock.calls[0][1] as Record<string, unknown>
     expect(fixes).toBeTruthy()
-    const ignore = fixes.ignoreInlineStyle as string[]
-    expect(Array.isArray(ignore)).toBe(true)
-    expect(ignore).toContain('pre')
-    expect(ignore).toContain('code')
-    expect(ignore).toContain('[contenteditable="true"]')
-    expect(typeof fixes.css).toBe('string')
-    expect(fixes.css).toContain('#ffffff')
+    expect(fixes.css).toBe('')
+    expect(fixes.ignoreInlineStyle).toEqual(['pre', 'code'])
+    expect(mocks.enable.mock.calls[0][0]).toMatchObject({
+      darkSchemeBackgroundColor: '#181b20',
+      darkSchemeTextColor: '#e8e6e3',
+    })
   })
 
-  it('编辑页时强制 disable，即使深色也不调用 enable，并把 color-scheme 置为 light', async () => {
+  it('编辑页策略为 disable 时关闭 Dark Reader，并把 color-scheme 置为 light', async () => {
     history.replaceState({}, '', '/console/posts/editor')
     await load(true)
     engine.initDarkReaderEngine()
@@ -109,7 +109,7 @@ describe('initDarkReaderEngine', () => {
     expect(mocks.enable).toHaveBeenCalled()
   })
 
-  it('编辑区 DOM 出现时强制 disable（路由未命中也能生效）', async () => {
+  it('编辑器异步挂载且策略为 disable 时关闭 Dark Reader', async () => {
     await load(true)
     engine.initDarkReaderEngine()
     await nextTick()
@@ -131,18 +131,38 @@ describe('initDarkReaderEngine', () => {
     el.remove()
   })
 
-  it('编辑页 + 策略=完全使用(深色) 时 enable（编辑页保持深色）', async () => {
+  it('编辑器通过异步 class 挂载且策略为 disable 时关闭 Dark Reader', async () => {
+    await load(true)
+    engine.initDarkReaderEngine()
+    await nextTick()
+    expect(mocks.enable).toHaveBeenCalled()
+    mocks.enable.mockClear()
+
+    const el = document.createElement('div')
+    document.body.appendChild(el)
+    await new Promise((resolve) => setTimeout(resolve, 0))
+
+    el.className = 'editor-content'
+    await new Promise((resolve) => setTimeout(resolve, 0))
+
+    expect(mocks.disable).toHaveBeenCalled()
+    expect(document.documentElement.style.colorScheme).toBe('light')
+    el.remove()
+  })
+
+  it('编辑页 + 策略=darkreader 时 enable（编辑页保持深色）', async () => {
     history.replaceState({}, '', '/console/posts/editor')
     await load(true)
     editorPolicy.value = 'darkreader'
     engine.initDarkReaderEngine()
     await nextTick()
     expect(mocks.enable).toHaveBeenCalled()
+    expect(mocks.enable.mock.calls[0][1]).toBeUndefined()
     expect(mocks.disable).not.toHaveBeenCalled()
     expect(document.documentElement.style.colorScheme).toBe('dark')
   })
 
-  it('编辑页策略从禁用切到完全使用（深色）时重新 enable', async () => {
+  it('编辑页策略从 disable 切到 darkreader（深色）时重新 enable', async () => {
     history.replaceState({}, '', '/console/posts/editor')
     await load(true)
     engine.initDarkReaderEngine()

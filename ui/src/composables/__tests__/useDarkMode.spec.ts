@@ -22,6 +22,9 @@ describe('useDarkMode', () => {
   async function load(systemDark = false): Promise<void> {
     vi.resetModules()
     localStorage.clear()
+    document.documentElement.removeAttribute('data-halo-theme')
+    document.documentElement.removeAttribute('data-halo-editor-policy')
+    document.documentElement.style.colorScheme = ''
     mockMatchMedia(systemDark)
     const mod = await import('../useDarkMode')
     useDarkMode = mod.useDarkMode
@@ -73,6 +76,23 @@ describe('useDarkMode', () => {
     expect(localStorage.getItem(STORAGE_KEY)).toBe('dark')
   })
 
+  it('全局主题与编辑页策略分别同步到 html 属性', async () => {
+    const { setTheme, setEditorPolicy } = useDarkMode()
+
+    setTheme('dark')
+    setEditorPolicy('darkreader')
+    await nextTick()
+
+    expect(document.documentElement.getAttribute('data-halo-theme')).toBe('dark')
+    expect(document.documentElement.getAttribute('data-halo-editor-policy')).toBe('darkreader')
+
+    setTheme('light')
+    await nextTick()
+
+    expect(document.documentElement.hasAttribute('data-halo-theme')).toBe(false)
+    expect(document.documentElement.getAttribute('data-halo-editor-policy')).toBe('darkreader')
+  })
+
   it('localStorage 非法值回退到 auto', async () => {
     localStorage.setItem(STORAGE_KEY, 'not-a-theme')
     await load(false)
@@ -107,6 +127,7 @@ describe('useDarkMode', () => {
   it('默认编辑页策略为 disable（编辑页禁用）', () => {
     const { editorPolicy } = useDarkMode()
     expect(editorPolicy.value).toBe('disable')
+    expect(document.documentElement.getAttribute('data-halo-editor-policy')).toBe('disable')
   })
 
   it('setEditorPolicy 会持久化到 localStorage', async () => {
@@ -114,6 +135,7 @@ describe('useDarkMode', () => {
     setEditorPolicy('darkreader')
     await nextTick()
     expect(localStorage.getItem('halo-dark-mode-editor')).toBe('darkreader')
+    expect(document.documentElement.getAttribute('data-halo-editor-policy')).toBe('darkreader')
   })
 
   it('storage 事件同步其他标签页的编辑页策略', async () => {

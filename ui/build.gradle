@@ -31,6 +31,7 @@ tasks.register('pnpmBuild', PnpmTask) {
     inputs.files(fileTree(
         dir: layout.projectDirectory,
         includes: ['*.cjs', '*.ts', '*.js', '*.json', '*.yaml']))
+    inputs.dir(rootProject.file('third-party/darkreader'))
     outputs.dir(layout.buildDirectory.dir('dist'))
 }
 

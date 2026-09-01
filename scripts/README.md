@@ -52,6 +52,29 @@ D:\settings\settings\uv\my_uv_env\Scripts\python.exe scripts\verify-toggle.py
 
 状态翻转全部 PASS 且按钮已移除时返回 0。
 
+脚本默认还会进入 `/console/posts/editor` 验证编辑页两种策略：
+
+- `disable`：编辑页关闭 Dark Reader，`color-scheme` 为 `light`
+- `darkreader`：编辑页保持 Dark Reader，`color-scheme` 为 `dark`
+- 离开编辑页后：恢复普通页面的深色状态
+
+如果暂时只想验证普通 Dashboard，可加 `--skip-editor`；如果文章编辑器路径
+需要文章名称，可用 `--editor-url "/console/posts/editor?name=..."` 覆盖默认路径。
+
+## 纯检查质量门
+
+当前 `pnpm lint` 命令保留项目原有的自动修复行为。发布或审查前请使用不改文件的检查：
+
+```powershell
+cd ui
+.\node_modules\.bin\vue-tsc.CMD --build
+.\node_modules\.bin\vitest.CMD run
+pnpm lint:check
+```
+
+`scripts/release.sh` 只接受干净工作区，默认执行本地构建和 JAR 内容校验；`--commit`、
+`--tag`、`--release` 都必须显式传入，脚本拒绝 `--push`。
+
 ## 输出
 
 - `scripts/output/scan-results.json`：按路由分组的结果

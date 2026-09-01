@@ -6,6 +6,6 @@
    Halo 官方设计 token（--halo-*）由 Halo 控制台自行提供，插件不覆盖、不污染
    官方命名空间，以保证后台所有页面（官方页 + 第三方插件页）的颜色风格统一。
 
-   说明：data-halo-theme 为兼容性遗留标记，当前已无 CSS 消费方，仅保留给外部脚本
-   与验证工具（scripts/verify-toggle.py）使用。
+   说明：data-halo-theme 表示全局主题，data-halo-editor-policy 表示编辑页策略；
+   两者由 useDarkMode 写入，供编辑页样式和验证工具（scripts/verify-toggle.py）使用。
    ============================================================ */

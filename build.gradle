@@ -39,6 +39,91 @@ tasks.named('classes') {
     dependsOn tasks.named('processUiResources')
 }
 
+tasks.register('verifyJarUiBundle') {
+    group = 'verification'
+    description = 'Verify the JAR frontend bundle matches ui/build/dist and version metadata'
+
+    def uiDist = project(':ui').layout.buildDirectory.dir('dist')
+    def jarFile = layout.buildDirectory.file("libs/plugin-dark-mode-${project.version}.jar")
+    inputs.files(uiDist.map { it.file('main.js') }, uiDist.map { it.file('style.css') })
+    inputs.file(jarFile)
+    dependsOn tasks.named('jar')
+
+    doLast {
+        def expectedFiles = ['ui/main.js', 'ui/style.css']
+        def distDir = uiDist.get().asFile
+        def targetJar = jarFile.get().asFile
+
+        if (!targetJar.isFile()) {
+            throw new GradleException("JAR not found: ${targetJar}")
+        }
+
+        def sha256 = { byte[] bytes ->
+            def digest = java.security.MessageDigest.getInstance('SHA-256').digest(bytes)
+            digest.collect { String.format('%02x', it & 0xff) }.join()
+        }
+
+        def readEntry = { java.util.jar.JarFile jar, String name ->
+            def entry = jar.getJarEntry(name)
+            if (entry == null) {
+                throw new GradleException("JAR entry not found: ${name}")
+            }
+            jar.getInputStream(entry).withCloseable { input -> input.bytes }
+        }
+
+        def projectVersion = project.version.toString()
+        def expectedBundle = [
+            'ui/main.js'   : new File(distDir, 'main.js'),
+            'ui/style.css' : new File(distDir, 'style.css'),
+        ]
+
+        expectedBundle.each { entryName, sourceFile ->
+            if (!sourceFile.isFile()) {
+                throw new GradleException("Frontend build output not found: ${sourceFile}")
+            }
+        }
+
+        new java.util.jar.JarFile(targetJar).withCloseable { jar ->
+            expectedFiles.each { entryName ->
+                def sourceBytes = expectedBundle[entryName].bytes
+                def jarBytes = readEntry(jar, entryName)
+                def sourceHash = sha256(sourceBytes)
+                def jarHash = sha256(jarBytes)
+                if (sourceHash != jarHash) {
+                    throw new GradleException(
+                        "JAR bundle hash mismatch for ${entryName}: source=${sourceHash}, jar=${jarHash}"
+                    )
+                }
+            }
+
+            def manifestVersion = jar.manifest?.mainAttributes?.getValue('Implementation-Version')
+            if (manifestVersion != projectVersion) {
+                throw new GradleException(
+                    "JAR Implementation-Version mismatch: expected=${projectVersion}, actual=${manifestVersion}"
+                )
+            }
+
+            def pluginYaml = new String(readEntry(jar, 'plugin.yaml'), 'UTF-8')
+            def yamlVersion = (pluginYaml =~ /(?m)^\s*version:\s*["']?([^"'\s]+)["']?\s*$/)
+            if (!yamlVersion.find() || yamlVersion.group(1) != projectVersion) {
+                throw new GradleException(
+                    "plugin.yaml version mismatch: expected=${projectVersion}"
+                )
+            }
+
+            logger.lifecycle("JAR UI verification passed: ${targetJar.name}")
+            expectedFiles.each { entryName ->
+                logger.lifecycle("  ${entryName}: ${sha256(readEntry(jar, entryName))}")
+            }
+            logger.lifecycle("  version: ${projectVersion}")
+        }
+    }
+}
+
+tasks.named('check') {
+    dependsOn tasks.named('verifyJarUiBundle')
+}
+
 // 已知限制：run.halo.plugin.devtools 插件在 generatePluginComponentsIdx 内于执行期调用
 // "Task.project"，Gradle 9 对其弃用、Gradle 10 将报错。该调用来自第三方构建插件内部，
 // 无法在项目脚本内消除，故仅关闭配置缓存以规避当前构建失败，未来升级 devtools 后再处理。

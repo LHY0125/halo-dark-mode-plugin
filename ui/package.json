@@ -6,7 +6,10 @@
     "dev": "vite build --watch --mode=development",
     "lint:oxlint": "oxlint . --fix -D correctness --ignore-path ../.gitignore",
     "lint:eslint": "eslint . --fix",
-    "lint": "run-s lint:*",
+    "lint": "run-s lint:oxlint lint:eslint",
+    "lint:check:oxlint": "oxlint src *.ts -D correctness --ignore-path ../.gitignore",
+    "lint:check:eslint": "eslint src *.ts",
+    "lint:check": "run-s lint:check:oxlint lint:check:eslint",
     "prettier": "prettier --write src/",
     "test:unit": "vitest",
     "type-check": "vue-tsc --build"
