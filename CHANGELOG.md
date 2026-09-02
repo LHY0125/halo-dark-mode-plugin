@@ -22,6 +22,16 @@ Halo 深色模式插件（`top.liuhangyv.darkmode`）的显著变更记录。版
 
 > v1.0.5 之前的版本无独立 Release 记录，历史变更见 [GitHub Releases](https://github.com/LHY0125/halo-dark-mode-plugin/releases)。
 
+## v1.1.7（2026-09-02）
+
+### 修复
+- 修复深色模式设置页中自定义单选按钮不可见的问题。
+- 修复 Vue `scoped` 样式无法作用于 Halo `VEntity` 插槽内容的问题，确保主题模式和编辑页策略选项均显示圆形单选控件。
+
+### 验证
+- 在本地 Halo 实例中实测 5 个单选控件均正常渲染。
+- `pnpm type-check`、`pnpm lint:check`、`pnpm test:unit`、`pnpm build` 与 `./gradlew build` 通过。
+
 ## v1.1.6（2026-08-31）
 
 ### 新增
