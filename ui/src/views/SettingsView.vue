@@ -118,7 +118,7 @@ const editorOptions: { value: EditorPolicy; label: string; description: string }
   --dm-row-selected: rgb(var(--colors-primary, 76 203 160) / 0.08);
 }
 
-.dm-radio {
+:deep(.dm-radio) {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -134,7 +134,7 @@ const editorOptions: { value: EditorPolicy; label: string; description: string }
   flex-shrink: 0;
 }
 
-.dm-radio::after {
+:deep(.dm-radio::after) {
   content: '';
   width: 0.5rem;
   height: 0.5rem;
@@ -144,12 +144,12 @@ const editorOptions: { value: EditorPolicy; label: string; description: string }
   transition: transform 0.15s ease;
 }
 
-.dm-radio.is-checked {
+:deep(.dm-radio.is-checked) {
   border-color: var(--dm-radio-accent);
   background: var(--dm-radio-accent-soft);
 }
 
-.dm-radio.is-checked::after {
+:deep(.dm-radio.is-checked::after) {
   transform: scale(1);
 }
 
