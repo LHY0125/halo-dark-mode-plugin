@@ -21,6 +21,7 @@ workplace/*
 # 暗色扫描输出与会话
 scripts/output/
 scripts/.browser-profile/
+scripts/.browser-profile-local/
 
 # 本地环境变量 / API token，严禁入库
 .env

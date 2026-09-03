@@ -1,64 +1,120 @@
 /* ============================================================
-   Halo Dark Mode — 文章/页面编辑内容区「浅色纸面」
+   Halo Dark Mode — 文章/页面编辑工作区「浅色纸面」
 
-   背景：编辑页策略选择「禁用 Dark Reader」时，编辑区使用白纸，
-   而左侧导航栏、工具栏等后台其余部分仍按全局主题处理。选择
-   「编辑页也使用 Dark Reader」时，本文件不介入编辑区，避免覆盖 DR。
-
-   说明：白纸规则只匹配全局深色 + 编辑页禁用策略两个 HTML 状态，
-   由 useDarkMode 统一写入 data-halo-theme 和 data-halo-editor-policy。
+   Dark Reader 仍处理整页，因此左侧导航和编辑页外围保持深色。
+   所有规则均以 html 的严格编辑页属性和 Halo RichTextEditor 根为边界。
    ============================================================ */
 
-/* 编辑内容区容器：白底、黑字、深色光标 */
-html[data-halo-theme="dark"][data-halo-editor-policy="disable"] .editor-content,
-html[data-halo-theme="dark"][data-halo-editor-policy="disable"] [contenteditable="true"],
-html[data-halo-theme="dark"][data-halo-editor-policy="disable"] .ProseMirror {
+/* 同一 html 元素上的属性组合，避免影响链接弹窗或代码注入页。 */
+html[data-halo-theme="dark"][data-halo-editor-policy="disable"][data-halo-editor-scope="post-editor"]
+  .halo-rich-text-editor,
+html[data-halo-theme="dark"][data-halo-editor-policy="disable"][data-halo-editor-scope="single-page-editor"]
+  .halo-rich-text-editor {
+  color-scheme: light !important;
+  background-color: #ffffff !important;
+  color: #1f2328 !important;
+}
+
+/* 默认编辑器的工作区和右侧辅助区。 */
+html[data-halo-theme="dark"][data-halo-editor-policy="disable"][data-halo-editor-scope="post-editor"]
+  .halo-rich-text-editor
+  :is(.editor-entry, .editor-main, .editor-main-content, .editor-entry-extra),
+html[data-halo-theme="dark"][data-halo-editor-policy="disable"][data-halo-editor-scope="single-page-editor"]
+  .halo-rich-text-editor
+  :is(.editor-entry, .editor-main, .editor-main-content, .editor-entry-extra) {
+  background-color: #ffffff !important;
+  color: #1f2328 !important;
+}
+
+/* 工具栏的背景和文字也恢复为浅色，保留布局和交互属性。 */
+html[data-halo-theme="dark"][data-halo-editor-policy="disable"][data-halo-editor-scope="post-editor"]
+  .halo-rich-text-editor
+  .editor-header,
+html[data-halo-theme="dark"][data-halo-editor-policy="disable"][data-halo-editor-scope="single-page-editor"]
+  .halo-rich-text-editor
+  .editor-header {
+  background-color: #ffffff !important;
+  color: #1f2328 !important;
+}
+
+/* 工作区中的原生控件不能继承 html 的 dark 控件主题。 */
+html[data-halo-theme="dark"][data-halo-editor-policy="disable"][data-halo-editor-scope="post-editor"]
+  .halo-rich-text-editor
+  :is(button, input, select, textarea),
+html[data-halo-theme="dark"][data-halo-editor-policy="disable"][data-halo-editor-scope="single-page-editor"]
+  .halo-rich-text-editor
+  :is(button, input, select, textarea) {
+  color-scheme: light !important;
+  background-color: #ffffff !important;
+  color: #1f2328 !important;
+  border-color: #d7dbe0 !important;
+}
+
+/* 正文纸面、光标和正文元素。 */
+html[data-halo-theme="dark"][data-halo-editor-policy="disable"][data-halo-editor-scope="post-editor"]
+  .halo-rich-text-editor
+  .editor-main-content
+  .ProseMirror,
+html[data-halo-theme="dark"][data-halo-editor-policy="disable"][data-halo-editor-scope="single-page-editor"]
+  .halo-rich-text-editor
+  .editor-main-content
+  .ProseMirror {
   background-color: #ffffff !important;
   color: #1f2328 !important;
   caret-color: #1f2328 !important;
 }
 
-/* 内容区正文文字 → 黑字，背景透明以透出白色纸面 */
-html[data-halo-theme="dark"][data-halo-editor-policy="disable"] .editor-content :is(
-    p, li, h1, h2, h3, h4, h5, h6, span, a, strong, em, del,
-    blockquote, td, th, label, small, figcaption),
-html[data-halo-theme="dark"][data-halo-editor-policy="disable"] .ProseMirror :is(
-    p, li, h1, h2, h3, h4, h5, h6, span, a, strong, em, del,
-    blockquote, td, th, label, small, figcaption) {
-  color: #1f2328 !important;
+html[data-halo-theme="dark"][data-halo-editor-policy="disable"][data-halo-editor-scope="post-editor"]
+  .halo-rich-text-editor
+  .editor-main-content
+  .ProseMirror
+  :is(p, li, h1, h2, h3, h4, h5, h6, span, a, strong, em, del, blockquote, td, th, label, small, figcaption, code),
+html[data-halo-theme="dark"][data-halo-editor-policy="disable"][data-halo-editor-scope="single-page-editor"]
+  .halo-rich-text-editor
+  .editor-main-content
+  .ProseMirror
+  :is(p, li, h1, h2, h3, h4, h5, h6, span, a, strong, em, del, blockquote, td, th, label, small, figcaption, code) {
   background-color: transparent !important;
+  color: #1f2328 !important;
 }
 
-/* 代码块：浅灰底 + 深字，避免「白底白字」不可读 */
-html[data-halo-theme="dark"][data-halo-editor-policy="disable"] .editor-content pre,
-html[data-halo-theme="dark"][data-halo-editor-policy="disable"] .editor-content pre code,
-html[data-halo-theme="dark"][data-halo-editor-policy="disable"] .ProseMirror pre,
-html[data-halo-theme="dark"][data-halo-editor-policy="disable"] .ProseMirror pre code {
+/* 代码块、占位符、表格和分隔线。 */
+html[data-halo-theme="dark"][data-halo-editor-policy="disable"][data-halo-editor-scope="post-editor"]
+  .halo-rich-text-editor
+  .editor-main-content
+  .ProseMirror
+  :is(pre, pre code),
+html[data-halo-theme="dark"][data-halo-editor-policy="disable"][data-halo-editor-scope="single-page-editor"]
+  .halo-rich-text-editor
+  .editor-main-content
+  .ProseMirror
+  :is(pre, pre code) {
   background-color: #f6f8fa !important;
   color: #1f2328 !important;
 }
 
-/* 代码块内的语法高亮片段统一压暗，保证在浅色纸面上可读 */
-html[data-halo-theme="dark"][data-halo-editor-policy="disable"] .editor-content pre :is(span, code),
-html[data-halo-theme="dark"][data-halo-editor-policy="disable"] .ProseMirror pre :is(span, code) {
-  color: #1f2328 !important;
-}
-
-/* 空内容占位符 / 引用块：在白色纸面上用中性灰，避免过浅 */
-html[data-halo-theme="dark"][data-halo-editor-policy="disable"] .ProseMirror [data-placeholder]::before,
-html[data-halo-theme="dark"][data-halo-editor-policy="disable"] .ProseMirror .is-editor-empty:first-child::before,
-html[data-halo-theme="dark"][data-halo-editor-policy="disable"] .editor-content [data-placeholder]::before {
+html[data-halo-theme="dark"][data-halo-editor-policy="disable"][data-halo-editor-scope="post-editor"]
+  .halo-rich-text-editor
+  .editor-main-content
+  .ProseMirror
+  p.is-empty::before,
+html[data-halo-theme="dark"][data-halo-editor-policy="disable"][data-halo-editor-scope="single-page-editor"]
+  .halo-rich-text-editor
+  .editor-main-content
+  .ProseMirror
+  p.is-empty::before {
   color: #9aa0a6 !important;
 }
 
-/* 表格边框与分隔线：在白色纸面上重新描边，避免散架 */
-html[data-halo-theme="dark"][data-halo-editor-policy="disable"] .editor-content table,
-html[data-halo-theme="dark"][data-halo-editor-policy="disable"] .editor-content table th,
-html[data-halo-theme="dark"][data-halo-editor-policy="disable"] .editor-content table td,
-html[data-halo-theme="dark"][data-halo-editor-policy="disable"] .editor-content hr,
-html[data-halo-theme="dark"][data-halo-editor-policy="disable"] .ProseMirror table,
-html[data-halo-theme="dark"][data-halo-editor-policy="disable"] .ProseMirror table th,
-html[data-halo-theme="dark"][data-halo-editor-policy="disable"] .ProseMirror table td,
-html[data-halo-theme="dark"][data-halo-editor-policy="disable"] .ProseMirror hr {
+html[data-halo-theme="dark"][data-halo-editor-policy="disable"][data-halo-editor-scope="post-editor"]
+  .halo-rich-text-editor
+  .editor-main-content
+  .ProseMirror
+  :is(table, th, td, hr),
+html[data-halo-theme="dark"][data-halo-editor-policy="disable"][data-halo-editor-scope="single-page-editor"]
+  .halo-rich-text-editor
+  .editor-main-content
+  .ProseMirror
+  :is(table, th, td, hr) {
   border-color: #d7dbe0 !important;
 }

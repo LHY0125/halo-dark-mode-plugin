@@ -132,6 +132,7 @@ describe('SettingsView', () => {
   it('渲染编辑页 Dark Reader 两个选项', () => {
     expect(wrapper.text()).toContain('编辑页也使用 Dark Reader')
     expect(wrapper.text()).toContain('编辑页使用浅色纸面')
+    expect(wrapper.text()).toContain('仅编辑工作区使用浅色，左侧导航和页面外围继续使用 Dark Reader 深色')
   })
 
   it('点击「编辑页也使用 Dark Reader」调用 setEditorPolicy', async () => {

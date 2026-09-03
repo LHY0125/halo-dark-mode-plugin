@@ -31,7 +31,11 @@ const modeOptions: { value: ThemeMode; label: string; description: string }[] = 
 
 const editorOptions: { value: EditorPolicy; label: string; description: string }[] = [
   { value: 'darkreader', label: '编辑页也使用 Dark Reader', description: '编辑页跟随全局主题（适合 Markdown 等编辑器）' },
-  { value: 'disable', label: '编辑页使用浅色纸面', description: '编辑页关闭 Dark Reader，避免富文本编辑器卡死' },
+  {
+    value: 'disable',
+    label: '编辑页使用浅色纸面',
+    description: '仅编辑工作区使用浅色，左侧导航和页面外围继续使用 Dark Reader 深色',
+  },
 ]
 </script>
 
@@ -78,7 +82,7 @@ const editorOptions: { value: EditorPolicy; label: string; description: string }
         <div class="p-4">
           <VDescription>
             <VDescriptionItem label="编辑页 Dark Reader">
-              <VTag>{{ editorPolicy === 'darkreader' ? '跟随 Dark Reader' : '编辑页白纸' }}</VTag>
+              <VTag>{{ editorPolicy === 'darkreader' ? '跟随 Dark Reader' : '编辑工作区浅色纸面' }}</VTag>
             </VDescriptionItem>
           </VDescription>
         </div>

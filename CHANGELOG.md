@@ -22,6 +22,22 @@ Halo 深色模式插件（`top.liuhangyv.darkmode`）的显著变更记录。版
 
 > v1.0.5 之前的版本无独立 Release 记录，历史变更见 [GitHub Releases](https://github.com/LHY0125/halo-dark-mode-plugin/releases)。
 
+## v1.1.8（2026-09-03）
+
+### 修复
+- 收窄文章和自定义页面编辑页识别范围，仅匹配 `/console/posts/editor` 与 `/console/single-pages/editor`，避免链接编辑弹窗、代码注入页面和普通可编辑控件误触发编辑页策略。
+- 深色模式下保留 Dark Reader 对整页的处理，仅将内容编辑工作区恢复为浅色纸面，左侧导航、顶栏和编辑页外围继续保持深色。
+- 为编辑工作区增加局部 `color-scheme: light`，保证工作区内原生按钮、下拉控件和滚动条采用浅色控件。
+
+### 行为变化
+- “编辑页使用浅色纸面”现在表示局部编辑工作区浅色，不再关闭整页 Dark Reader；“编辑页也使用 Dark Reader”仍使编辑工作区完全跟随 Dark Reader。
+- 所有深色页面统一使用同一组 Dark Reader fixes 参数，避免跨路由切换时保留错误配置。
+
+### 验证
+- 新增严格编辑路由、普通可编辑页面误判、链接页、代码注入页和跨路由状态回归测试。
+- `pnpm type-check`、`pnpm lint:check`、`pnpm test:unit`、`pnpm build` 与 `./gradlew clean build` 通过。
+- 真实 Halo 页面验证仍需在登录网关可用且本地实例恢复后执行，详见本次开发记录。
+
 ## v1.1.7（2026-09-02）
 
 ### 修复

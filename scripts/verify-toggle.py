@@ -1,4 +1,4 @@
-"""验证主题切换：覆盖普通页和编辑页 Dark Reader 策略。"""
+"""验证主题切换：覆盖普通页和局部编辑工作区策略。"""
 import argparse
 import pathlib
 import sys
@@ -17,6 +17,7 @@ def read_state(page) -> dict:
         """() => ({
             attr: document.documentElement.getAttribute('data-halo-theme'),
             editorPolicy: document.documentElement.getAttribute('data-halo-editor-policy'),
+            editorScope: document.documentElement.getAttribute('data-halo-editor-scope'),
             darkreader: document.documentElement.getAttribute('data-darkreader-mode'),
             stored: localStorage.getItem('halo-dark-mode-theme'),
             editorStored: localStorage.getItem('halo-dark-mode-editor'),
@@ -67,20 +68,18 @@ def wait_mode(page, expect_dark: bool) -> None:
     )
 
 
-def wait_editor_state(page, policy: str, expect_darkreader: bool) -> None:
+def wait_editor_state(page, policy: str, expect_scope: str) -> None:
     page.wait_for_function(
-        """([policy, expectDarkReader]) => {
+        """([policy, expectScope]) => {
             const root = document.documentElement
             const actualPolicy = root.getAttribute('data-halo-editor-policy')
+            const actualScope = root.getAttribute('data-halo-editor-scope')
             const darkreader = root.getAttribute('data-darkreader-mode')
             const scheme = root.style.colorScheme
             if (actualPolicy !== policy) return false
-            if (expectDarkReader) {
-                return darkreader === 'dynamic' && scheme === 'dark'
-            }
-            return darkreader === null && scheme === 'light'
+            return actualScope === expectScope && darkreader === 'dynamic' && scheme === 'dark'
         }""",
-        arg=[policy, expect_darkreader],
+        arg=[policy, expect_scope],
         timeout=15000,
     )
 
@@ -169,23 +168,25 @@ def main() -> int:
                 page.wait_for_load_state("networkidle", timeout=10000)
             except Exception:
                 pass
-            wait_editor_state(page, policy="disable", expect_darkreader=False)
+            wait_editor_state(page, policy="disable", expect_scope="post-editor")
             disabled_state = read_state(page)
             disable_pass = (
                 disabled_state["editorPolicy"] == "disable"
                 and disabled_state["editorStored"] == "disable"
-                and disabled_state["darkreader"] is None
-                and disabled_state["colorScheme"] == "light"
+                and disabled_state["editorScope"] == "post-editor"
+                and disabled_state["darkreader"] == "dynamic"
+                and disabled_state["colorScheme"] == "dark"
             )
-            print(f"编辑页 disable 策略: {'PASS' if disable_pass else 'FAIL'} {disabled_state}")
+            print(f"编辑页局部浅色工作区策略: {'PASS' if disable_pass else 'FAIL'} {disabled_state}")
             editor_checks.append(disable_pass)
 
             set_editor_policy(page, "darkreader")
-            wait_editor_state(page, policy="darkreader", expect_darkreader=True)
+            wait_editor_state(page, policy="darkreader", expect_scope="post-editor")
             darkreader_state = read_state(page)
             darkreader_pass = (
                 darkreader_state["editorPolicy"] == "darkreader"
                 and darkreader_state["editorStored"] == "darkreader"
+                and darkreader_state["editorScope"] == "post-editor"
                 and darkreader_state["darkreader"] == "dynamic"
                 and darkreader_state["colorScheme"] == "dark"
             )
@@ -203,6 +204,7 @@ def main() -> int:
             restored_pass = (
                 restored_state["editorPolicy"] == "disable"
                 and restored_state["editorStored"] == "disable"
+                and restored_state["editorScope"] is None
                 and restored_state["darkreader"] == "dynamic"
                 and restored_state["colorScheme"] == "dark"
             )

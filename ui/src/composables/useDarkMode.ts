@@ -31,9 +31,9 @@ function persistTheme(theme: ThemeMode): void {
 }
 
 /**
- * 从 localStorage 读取编辑页策略；非法值回退到默认「编辑页禁用」。
- * 默认禁用是为了避免富文本（ProseMirror/TipTap）编辑器与 DR 动态模式互相触发导致卡死；
- * 使用 Markdown 等不受影响的编辑器的用户可切换为「编辑页也使用 Dark Reader」。
+ * 从 localStorage 读取编辑页策略；非法值回退到默认「编辑工作区浅色纸面」。
+ * 默认使用局部浅色覆盖是为了降低富文本（ProseMirror/TipTap）编辑器与 DR 动态样式
+ * 交互时的风险；使用 Markdown 等不受影响的编辑器的用户可切换为「编辑页也使用 Dark Reader」。
  */
 function loadEditorPolicy(): EditorPolicy {
   try {
@@ -59,7 +59,7 @@ function persistEditorPolicy(policy: EditorPolicy): void {
 /**
  * 将全局主题和编辑页策略同步到 <html>。
  * data-halo-theme 表示全局主题，data-halo-editor-policy 表示编辑页策略；
- * 两个信号分开维护，编辑页白纸 CSS 可以据此精确限定作用范围。
+ * 两个信号分开维护，编辑工作区浅色 CSS 可以据此精确限定作用范围。
  * color-scheme 由 darkreader-engine 统一管理，因为它需要同时知道当前路由。
  */
 function applyHtmlAttributes(isDark: boolean, policy: EditorPolicy): void {

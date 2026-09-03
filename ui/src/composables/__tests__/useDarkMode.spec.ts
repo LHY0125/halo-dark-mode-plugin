@@ -124,7 +124,7 @@ describe('useDarkMode', () => {
     expect(theme.value).toBe('light')
   })
 
-  it('默认编辑页策略为 disable（编辑页禁用）', () => {
+  it('默认编辑页策略为 disable（编辑工作区浅色纸面）', () => {
     const { editorPolicy } = useDarkMode()
     expect(editorPolicy.value).toBe('disable')
     expect(document.documentElement.getAttribute('data-halo-editor-policy')).toBe('disable')

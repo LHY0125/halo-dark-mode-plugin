@@ -54,8 +54,8 @@ D:\settings\settings\uv\my_uv_env\Scripts\python.exe scripts\verify-toggle.py
 
 脚本默认还会进入 `/console/posts/editor` 验证编辑页两种策略：
 
-- `disable`：编辑页关闭 Dark Reader，`color-scheme` 为 `light`
-- `darkreader`：编辑页保持 Dark Reader，`color-scheme` 为 `dark`
+- `disable`：Dark Reader 仍处理整页，文章编辑工作区局部使用浅色纸面；`data-halo-editor-scope` 为 `post-editor`，根节点 `color-scheme` 为 `dark`
+- `darkreader`：编辑页和编辑工作区完全跟随 Dark Reader，根节点 `color-scheme` 为 `dark`
 - 离开编辑页后：恢复普通页面的深色状态
 
 如果暂时只想验证普通 Dashboard，可加 `--skip-editor`；如果文章编辑器路径
