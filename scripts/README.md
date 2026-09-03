@@ -61,6 +61,34 @@ D:\settings\settings\uv\my_uv_env\Scripts\python.exe scripts\verify-toggle.py
 如果暂时只想验证普通 Dashboard，可加 `--skip-editor`；如果文章编辑器路径
 需要文章名称，可用 `--editor-url "/console/posts/editor?name=..."` 覆盖默认路径。
 
+## 编辑页真实样式验证
+
+`verify-toggle.py` 主要验证主题状态、存储值和路由范围属性；它不会判断页面最终的背景色。
+要验证编辑页的实际计算样式，请使用：
+
+```powershell
+# 验证当前截图对应的「编辑页也使用 Dark Reader」策略
+D:\settings\settings\uv\my_uv_env\Scripts\python.exe scripts\verify-editor-visual.py --policy darkreader --editor-url "/console/posts/editor?name=..."
+
+# 验证「编辑页使用浅色纸面」策略
+D:\settings\settings\uv\my_uv_env\Scripts\python.exe scripts\verify-editor-visual.py --policy disable --editor-url "/console/posts/editor?name=..."
+```
+
+脚本通过 `getComputedStyle()` 读取并保存以下区域的背景色、文字色和 `color-scheme`：
+
+- `aside.sidebar` 左侧导航
+- `.halo-rich-text-editor` 编辑器根容器
+- `.editor-header` 工具栏
+- `.editor-entry`、`.editor-main`、`.editor-main-content` 工作区
+- `.ProseMirror` 正文区域
+- `.editor-entry-extra` 右侧辅助区域
+- `.ProseMirror pre` 代码块（页面存在时）
+
+输出保存到 `scripts/output/editor-visual.json` 和 `scripts/output/editor-visual.png`，目录已被
+`.gitignore` 忽略。`darkreader` 策略预期编辑器主体为深色，原始样式保护的代码块可以保留浅色；
+`disable` 策略预期编辑器工作区为浅色。两种策略都要求左侧导航保持深色。`data-darkreader-mode`
+的真实值必须通过真实浏览器读取，不能由 Dark Reader 的单元测试 mock 推断。
+
 ## 纯检查质量门
 
 当前 `pnpm lint` 命令保留项目原有的自动修复行为。发布或审查前请使用不改文件的检查：
@@ -87,4 +115,4 @@ pnpm lint:check
   元素误判为界面残留。
 - 路由从 Vue Router 动态发现，Halo 或插件升级新增页面后无需维护清单。
 - `scan-dark.py` 主要为历史手工 CSS 工作流保留；当前暗色转换由 Dark Reader 负责，
-  运行时行为验证以 `verify-toggle.py` 为准。
+  运行时状态验证以 `verify-toggle.py` 为准，编辑页最终颜色以 `verify-editor-visual.py` 为准。

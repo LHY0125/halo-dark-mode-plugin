@@ -106,7 +106,6 @@ describe('darkreader-engine', () => {
     expect(mocks.enable).toHaveBeenCalledTimes(1)
     expect(mocks.disable).not.toHaveBeenCalled()
     expect(document.documentElement.getAttribute('data-halo-editor-scope')).toBe('post-editor')
-    expect(document.documentElement.getAttribute('data-halo-darkreader-mode')).toBe(null)
     expect(document.documentElement.style.colorScheme).toBe('dark')
   })
 
@@ -119,7 +118,6 @@ describe('darkreader-engine', () => {
     expect(mocks.enable).toHaveBeenCalledTimes(1)
     expect(mocks.disable).not.toHaveBeenCalled()
     expect(document.documentElement.getAttribute('data-halo-editor-scope')).toBe('single-page-editor')
-    expect(document.documentElement.getAttribute('data-halo-darkreader-mode')).toBe(null)
     expect(document.documentElement.style.colorScheme).toBe('dark')
   })
 
@@ -154,7 +152,6 @@ describe('darkreader-engine', () => {
     expect(mocks.disable).not.toHaveBeenCalled()
     expect(mocks.enable).not.toHaveBeenCalled()
     expect(document.documentElement.hasAttribute('data-halo-editor-scope')).toBe(false)
-    expect(document.documentElement.getAttribute('data-halo-darkreader-mode')).toBe(null)
   })
 
   it('链接页和代码注入页不设置编辑页范围', async () => {
